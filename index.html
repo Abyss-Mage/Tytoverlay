@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TYTGEAR Overlay Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo:wght@400;500;700;800&family=Big+Shoulders+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Monochrome broadcast-print system. Ink and paper only; the product photo is the one thing allowed colour.
+   Layout: tag = ticker / main / meta bands; popup = spec sheet; editor = two-column studio with sticky preview. */
+:root{
+  --ink:#0b0b0b; --paper:#f4f4f4; --grey:#6e6e6e; --rule:#0b0b0b; --wash:#e4e4e4;
+  --f-disp:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
+  --f-body:Archivo,'Helvetica Neue',Arial,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+
+/* =================== NAME TAG =================== */
+.tg-root{position:relative;transform-origin:0 0;--mono:var(--f-mono);--body:var(--f-body);--bb:var(--w);--bf:var(--k)}
+.f-ink  {--k:#0b0b0b;--w:#f4f4f4;--sk:#f4f4f4;--sw:#0b0b0b;--line:rgba(244,244,244,.2);--edge:#f4f4f4}
+.f-paper{--k:#f4f4f4;--w:#0b0b0b;--sk:#0b0b0b;--sw:#f4f4f4;--line:rgba(11,11,11,.22);--edge:#0b0b0b}
+.f-mono {--k:#0b0b0b;--w:#f4f4f4;--sk:#0b0b0b;--sw:#f4f4f4;--line:rgba(244,244,244,.2);--edge:rgba(244,244,244,.35)}
+.tg-unit{position:absolute;left:0;bottom:0}
+.tg-unit.hidden .tg-anim{visibility:hidden}
+.tg{position:relative;box-sizing:border-box;width:var(--tw);background:var(--k);color:var(--w);border:2px solid var(--edge);font-family:var(--body)}
+.band{height:20px;background:var(--sk);color:var(--sw);overflow:hidden;display:flex;align-items:center;font:500 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.f-mono .band{border-bottom:1px solid var(--line)}
+.band-in{display:inline-flex;will-change:transform}
+.ticking .band-in{animation:tick var(--td,20s) linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+.band.static{justify-content:space-between;padding:0 8px}
+.tg-main{position:relative;height:76px;display:flex;align-items:stretch;overflow:hidden}
+.ht .tg-main::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--w) 1.1px,transparent 1.5px);background-size:6px 6px;opacity:.22;-webkit-mask-image:linear-gradient(90deg,transparent 45%,#000 100%);mask-image:linear-gradient(90deg,transparent 45%,#000 100%);pointer-events:none}
+.tg-badge{flex:0 0 76px;background:var(--bb);color:var(--bf);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px}
+.tg-badge b{font:var(--dw) 30px/.8 var(--disp);letter-spacing:.01em}
+.tg-badge small{font:700 7.5px/1 var(--mono);letter-spacing:.22em}
+.tg-txt{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0 12px 0 14px}
+.tg-name{font:var(--dw) 46px/.88 var(--disp);text-transform:uppercase;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.tg-sub{font:500 11px/14px var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-top:7px;height:14px;overflow:hidden;white-space:nowrap;opacity:.85}
+.tg-sub::before{content:"→ "}
+.tg-side{position:relative;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:7px;padding-right:12px;font:500 9px/1 var(--mono);letter-spacing:.18em}
+.tg-side svg{display:block}
+.narrow .tg-side{display:none}
+.tg-meta{height:18px;display:flex;border-top:1px solid var(--line);font:500 9.5px/18px var(--mono);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.tg-meta>span{padding:0 9px;border-right:1px solid var(--line)}
+.tg-meta>span:last-child{border-right:0;margin-left:auto;border-left:1px solid var(--line)}
+.rec::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--w);margin-right:6px;vertical-align:1px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+.wbar{position:absolute;top:0;bottom:0;left:0;width:22px;background:var(--w);opacity:0;pointer-events:none;z-index:4}
+.mk{position:absolute;width:12px;height:12px;border:0 solid #f4f4f4;filter:drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);pointer-events:none}
+.mk.tl{left:-9px;top:-9px;border-left-width:1.5px;border-top-width:1.5px}
+.mk.tr{right:-9px;top:-9px;border-right-width:1.5px;border-top-width:1.5px}
+.mk.bl{left:-9px;bottom:-9px;border-left-width:1.5px;border-bottom-width:1.5px}
+.mk.br{right:-9px;bottom:-9px;border-right-width:1.5px;border-bottom-width:1.5px}
+.nomarks .mk{display:none}
+
+/* =================== PRODUCT POPUP (spec sheet) =================== */
+.pp-unit{position:absolute;width:444px}
+.pp-unit.hidden{visibility:hidden}
+.pp{position:relative;box-sizing:border-box;width:444px;background:var(--k);color:var(--w);border:2px solid var(--edge);font-family:var(--body)}
+.pp .band{height:22px}
+.pp-body{display:grid;grid-template-columns:150px 1fr;gap:14px;height:206px;box-sizing:border-box;padding:14px}
+.pp-photo{display:flex;flex-direction:column;gap:5px;min-width:0}
+.pp-frame{position:relative;height:160px;border:1px solid var(--line);overflow:hidden;background:#000}
+.pp-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.pp-frame .fl{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.pp-frame i{position:absolute;width:9px;height:9px;border:0 solid #fff;mix-blend-mode:difference}
+.pp-frame i:nth-of-type(1){left:5px;top:5px;border-left-width:1.5px;border-top-width:1.5px}
+.pp-frame i:nth-of-type(2){right:5px;top:5px;border-right-width:1.5px;border-top-width:1.5px}
+.pp-frame i:nth-of-type(3){left:5px;bottom:5px;border-left-width:1.5px;border-bottom-width:1.5px}
+.pp-frame i:nth-of-type(4){right:5px;bottom:5px;border-right-width:1.5px;border-bottom-width:1.5px}
+.pp-fig{display:flex;justify-content:space-between;font:500 9px/1 var(--mono);letter-spacing:.16em;opacity:.8}
+.pp-info{display:flex;flex-direction:column;min-width:0}
+.pp-top{display:flex;justify-content:space-between;align-items:center;font:500 9.5px/1 var(--mono);letter-spacing:.16em}
+.pp-chip{background:var(--bb);color:var(--bf);padding:4px 6px;font-weight:700}
+.pp-cat{font:500 9.5px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-top:9px;opacity:.75}
+.pp-name{font:var(--dw) 31px/.9 var(--disp);text-transform:uppercase;letter-spacing:.005em;margin-top:5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pp-name.long{font-size:25px}
+.pp-spec{margin-top:auto;border-top:1px solid var(--line)}
+.pp-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:6px;font:500 9.5px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.pp-row em{font-style:normal;opacity:.7}
+.pp-row b{font-weight:500;text-align:right}
+.pp-price b{font:var(--dw) 30px/1 var(--disp);letter-spacing:.01em}
+.pp-code{position:relative;display:flex;align-items:center;gap:12px;height:56px;box-sizing:border-box;padding:0 14px;background:var(--sk);color:var(--sw);overflow:hidden}
+.f-mono .pp-code{border-top:1px solid var(--line)}
+.pp-code .lab{font:700 9px/1.25 var(--mono);letter-spacing:.2em}
+.pp-code .code{font:var(--dw) 30px/1 var(--disp);letter-spacing:.06em;border:2px solid var(--sw);padding:4px 10px 3px;white-space:nowrap;max-width:170px;overflow:hidden}
+.pp-code .off{font:700 10px/1.3 var(--mono);letter-spacing:.14em}
+.pp-code .cd{margin-left:auto;font:500 18px/1 var(--mono);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.pp-prog{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--sw);transform-origin:left}
+
+/* =================== OVERLAY MODE =================== */
+html.overlay,html.overlay body{background:transparent !important;margin:0;overflow:hidden}
+html.overlay #editor{display:none}
+#overlayHost{display:none}
+html.overlay #overlayHost{display:block}
+.host{padding:30px;box-sizing:content-box}
+
+/* =================== EDITOR (studio) =================== */
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 var(--f-body)}
+.mast{background:var(--ink);color:var(--paper)}
+.mast-in{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;padding-block:22px 18px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mast h1{margin:0;font:900 clamp(56px,9vw,112px)/.78 var(--f-disp);letter-spacing:-.01em;text-transform:uppercase}
+.mast-meta{display:grid;gap:3px;font:500 11px/1.4 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#bdbdbd;padding-bottom:4px}
+.mast-meta b{color:var(--paper);font-weight:700}
+.mast .sp{flex:1}
+.copy{appearance:none;border:0;background:var(--paper);color:var(--ink);font:900 26px/1 var(--f-disp);letter-spacing:.02em;text-transform:uppercase;padding:16px 22px 14px;cursor:pointer;display:flex;align-items:center;gap:14px}
+.copy small{font:500 10px/1.3 var(--f-mono);letter-spacing:.14em;text-align:left;color:var(--grey)}
+.copy:hover{background:#fff}
+.copy:focus-visible,.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.mast .copy:focus-visible{outline-color:var(--paper)}
+.wire{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--paper);overflow:hidden;white-space:nowrap;font:500 11px/30px var(--f-mono);letter-spacing:.2em;text-transform:uppercase}
+.wire .band-in{animation:tick 60s linear infinite}
+.studio{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:start}
+.controls{border-right:2px solid var(--ink)}
+.step{padding-block:22px 24px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:20px;border-bottom:2px solid var(--ink)}
+.step-h{display:grid;grid-template-columns:auto 1fr;gap:0 14px;align-items:end;margin-bottom:14px}
+.step-n{grid-row:span 2;font:900 64px/.75 var(--f-disp);color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.step h2{margin:0;font:900 30px/.9 var(--f-disp);text-transform:uppercase;letter-spacing:.01em}
+.step p.help{margin:4px 0 0;font:500 11px/1.45 var(--f-mono);letter-spacing:.04em;color:var(--grey)}
+.lbl{display:block;font:700 10.5px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;margin:16px 0 7px}
+.lbl:first-of-type{margin-top:0}
+input[type=text],textarea,select{width:100%;box-sizing:border-box;background:#fff;border:2px solid var(--ink);border-radius:0;color:var(--ink);padding:11px 12px;font:500 15px var(--f-body)}
+input.big{font:800 22px/1 var(--f-disp);letter-spacing:.03em;text-transform:uppercase;padding:12px}
+input.code{font:700 18px var(--f-mono);letter-spacing:.2em;text-transform:uppercase}
+textarea{resize:vertical;min-height:64px;font:500 13px/1.5 var(--f-mono)}
+input:focus,textarea:focus,select:focus{outline:3px solid var(--ink);outline-offset:2px}
+.warn{display:none;margin-top:8px;font:700 10.5px/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:6px 8px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{appearance:none;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:0;padding:9px 12px;font:700 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.opt:hover{background:var(--wash)}
+.opt.on{background:var(--ink);color:var(--paper)}
+.opt.on::before{content:"■ "}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.card-opt{padding:0;text-align:left;display:flex;flex-direction:column}
+.card-opt .sw{height:54px;display:flex;flex-direction:column;border-bottom:2px solid var(--ink)}
+.card-opt .sw i{height:10px}
+.card-opt .sw b{flex:1;display:flex;align-items:center;padding:0 8px;font:900 22px/1 var(--f-disp);letter-spacing:.02em}
+.card-opt>span{padding:8px;font:700 10px/1 var(--f-mono);letter-spacing:.16em}
+.card-opt.on::before{content:none}
+.card-opt.on{outline:3px solid var(--ink);outline-offset:2px}
+.card-opt.on>span::before{content:"■ "}
+.cards.four{grid-template-columns:repeat(4,1fr)}
+.cards.four .card-opt .sw b{font-size:18px}
+.custom-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.custom-row label{display:flex;flex-direction:column;gap:6px;font:700 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase}
+input[type=color]{width:100%;height:40px;border:2px solid var(--ink);border-radius:0;background:#fff;padding:2px;cursor:pointer;box-sizing:border-box}
+.linkbox{display:flex;align-items:stretch;border:2px solid var(--ink);margin-top:14px;background:#fff}
+.linkbox div{flex:1;min-width:0;padding:10px 12px;font:500 11px/1.45 var(--f-mono);letter-spacing:.06em}
+.linkbox div b{display:block;font:900 18px/1 var(--f-disp);letter-spacing:.03em;text-transform:uppercase;margin-bottom:4px}
+.linkbox button{appearance:none;border:0;border-left:2px solid var(--ink);background:var(--ink);color:var(--paper);padding:0 16px;font:700 11px/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.font-opt b{display:block;padding:12px 8px 8px;font-size:30px;line-height:.9;text-transform:uppercase;border-bottom:2px solid var(--ink)}
+.font-opt.on b{border-bottom-color:var(--paper)}
+.lock{background:var(--ink);color:var(--paper);padding:12px 14px;font:500 11px/1.55 var(--f-mono);letter-spacing:.06em;margin-bottom:16px}
+.lock b{display:block;font:900 20px/1 var(--f-disp);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.cats{margin:16px 0 0;padding:0;list-style:none;font:500 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.cats li{display:flex;gap:6px;padding:6px 0;border-bottom:1px dashed #9a9a9a}
+.cats li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cats li b{font-variant-numeric:tabular-nums}
+.cats li.tot{border-bottom:2px solid var(--ink);font-weight:700}
+details.more{padding-block:18px 22px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:20px;border-bottom:2px solid var(--ink)}
+details.more summary{cursor:pointer;font:900 24px/1 var(--f-disp);text-transform:uppercase;letter-spacing:.02em;list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"+ ";font-family:var(--f-mono)}
+details.more[open] summary::before{content:"− "}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input[type=range]{width:100%;accent-color:var(--ink)}
+.view{position:sticky;top:0;padding-block:20px 28px;padding-left:20px;padding-right:max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px;min-width:0}
+.view-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.view-h h3{margin:0 auto 0 0;font:900 26px/1 var(--f-disp);text-transform:uppercase}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:0;padding:10px 14px;font:700 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--ink)}
+.btn:hover{opacity:.85}
+.stageBox{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;overflow:hidden;border:2px solid var(--ink);background:#000}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:radial-gradient(ellipse at 72% 28%,#3a3a3a 0,transparent 55%),radial-gradient(ellipse at 15% 85%,#262626 0,transparent 50%),linear-gradient(160deg,#1c1c1c,#070707)}
+.stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:80px 80px}
+.stage-label{position:absolute;right:70px;top:56px;font:900 120px/1 var(--f-disp);color:rgba(255,255,255,.05);letter-spacing:.02em}
+.cam{position:absolute;left:50px;top:520px;width:540px;height:320px;background:linear-gradient(180deg,#2c2c2c,#151515);border:3px solid rgba(255,255,255,.18);overflow:hidden}
+.cam svg{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:88%;fill:#3c3c3c}
+.cam b{position:absolute;left:14px;top:12px;font:700 18px var(--f-mono);color:#8a8a8a;letter-spacing:.2em}
+#stageHost{position:absolute}
+.cap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:500 10.5px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+.obs{border:2px solid var(--ink);background:#fff}
+.obs h4{margin:0;padding:10px 14px;background:var(--ink);color:var(--paper);font:900 20px/1 var(--f-disp);text-transform:uppercase;letter-spacing:.03em}
+.obs ol{margin:0;padding:0;list-style:none;counter-reset:s}
+.obs li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;align-items:stretch;border-top:1px solid var(--ink);font-size:14px}
+.obs li:first-child{border-top:0}
+.obs li::before{content:counter(s,decimal-leading-zero);font:900 22px/1 var(--f-disp);padding:12px;border-right:1px solid var(--ink);display:flex;align-items:center}
+.obs li span{padding:10px 14px}
+.obs b{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;background:var(--wash);padding:1px 5px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--ink);color:var(--paper);font:700 12px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:14px 18px;border:2px solid var(--paper);outline:2px solid var(--ink);transition:transform .25s;z-index:50;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0)}
+@media (max-width:980px){.studio{grid-template-columns:minmax(0,1fr)}.controls{border-right:0;order:2;border-top:2px solid var(--ink)}.view{position:static;order:1;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.step,details.more{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.mast-in{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+@media (max-width:440px){.card-opt .sw b{font-size:17px}.cards.four{grid-template-columns:1fr 1fr}.copy{width:100%;justify-content:space-between}}
+@media (prefers-reduced-motion:reduce){#editor .band-in{animation:none}}
+</style>
+</head>
+<body>
+
+<div id="overlayHost" class="host"></div>
+
+<div id="editor">
+  <header class="mast">
+    <div class="mast-in">
+      <h1>Tytgear</h1>
+      <div class="mast-meta">
+        <span><b>Overlay Studio</b> / Creator Kit</span>
+        <span>Name tag + product drops for OBS</span>
+        <span id="syncLine">Catalog: tytgear.in</span>
+      </div>
+      <span class="sp"></span>
+      <button class="copy" id="copyTop" type="button"><span id="copyLabel">Copy OBS link</span> <small>Paste into<br>OBS → Browser</small></button>
+    </div>
+  </header>
+  <div class="wire" aria-hidden="true"><div class="band-in" id="wire"></div></div>
+
+  <div class="studio">
+    <aside class="controls">
+      <section class="step">
+        <div class="step-h"><span class="step-n">01</span><h2>Your details</h2><p class="help">Shown on your tag. Your code prints on every product drop.</p></div>
+        <label class="lbl" for="f-name">Name on stream</label>
+        <input type="text" class="big" id="f-name" data-k="name" maxlength="24" placeholder="NOVAPLAYS">
+        <label class="lbl" for="f-code">TYTGEAR creator code</label>
+        <input type="text" class="code" id="f-code" data-k="code" maxlength="16" placeholder="NOVA10">
+        <div class="warn" id="codeWarn">No code yet. Viewers can't use your discount.</div>
+        <label class="lbl" for="f-lines">Lines under your name · one per line</label>
+        <textarea id="f-lines" data-k="lines" placeholder="@yourhandle&#10;Live weekdays 8PM IST"></textarea>
+      </section>
+
+      <section class="step">
+        <div class="step-h"><span class="step-n">02</span><h2>Finish &amp; type</h2><p class="help">Black and white by default. Pick Custom to use your own colours.</p></div>
+        <span class="lbl">Finish</span>
+        <div class="cards four" data-k="finish" data-type="radio">
+          <button class="opt card-opt" type="button" data-v="ink"><span class="sw" style="background:#0b0b0b;color:#f4f4f4"><i style="background:#f4f4f4"></i><b>INK</b></span><span>Ink</span></button>
+          <button class="opt card-opt" type="button" data-v="paper"><span class="sw" style="background:#f4f4f4;color:#0b0b0b"><i style="background:#0b0b0b"></i><b>PAPER</b></span><span>Paper</span></button>
+          <button class="opt card-opt" type="button" data-v="mono"><span class="sw" style="background:#0b0b0b;color:#f4f4f4"><i style="background:#0b0b0b;border-bottom:1px solid #555"></i><b>MONO</b></span><span>Mono</span></button>
+          <button class="opt card-opt" type="button" data-v="custom"><span class="sw" id="customSw"><i></i><b>OWN</b></span><span>Custom</span></button>
+        </div>
+        <div class="custom-row" id="customRow" hidden>
+          <label for="f-c1">Background<input type="color" id="f-c1" data-k="c1"></label>
+          <label for="f-c2">Text<input type="color" id="f-c2" data-k="c2"></label>
+          <label for="f-c3">Accent<input type="color" id="f-c3" data-k="c3"></label>
+        </div>
+        <span class="lbl" style="margin-top:18px">Typeface</span>
+        <div class="cards" data-k="font" data-type="radio">
+          <button class="opt card-opt font-opt" type="button" data-v="shoulders"><b style="font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:900">Nova</b><span>Shoulders</span></button>
+          <button class="opt card-opt font-opt" type="button" data-v="anton"><b style="font-family:Anton,Impact,sans-serif;font-weight:400">Nova</b><span>Anton</span></button>
+          <button class="opt card-opt font-opt" type="button" data-v="archivo"><b style="font-family:'Archivo Black','Arial Black',sans-serif;font-weight:400;font-size:24px;padding-top:15px">Nova</b><span>Archivo</span></button>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="step-h"><span class="step-n">03</span><h2>Motion</h2><p class="help">How the tag enters, and what runs while it's up.</p></div>
+        <span class="lbl">Entrance</span>
+        <div class="opts" data-k="enter" data-type="radio">
+          <button class="opt" type="button" data-v="shutter">Shutter</button>
+          <button class="opt" type="button" data-v="wipe">Wipe</button>
+          <button class="opt" type="button" data-v="cut">Hard cut</button>
+          <button class="opt" type="button" data-v="stamp">Stamp</button>
+          <button class="opt" type="button" data-v="slide">Slide</button>
+        </div>
+        <span class="lbl" style="margin-top:18px">Details · tap to toggle</span>
+        <div class="opts">
+          <button class="opt" type="button" data-k="ticker" data-type="toggle">Ticker</button>
+          <button class="opt" type="button" data-k="scramble" data-type="toggle">Decode text</button>
+          <button class="opt" type="button" data-k="timecode" data-type="toggle">Timecode</button>
+          <button class="opt" type="button" data-k="halftone" data-type="toggle">Halftone</button>
+          <button class="opt" type="button" data-k="marks" data-type="toggle">Crop marks</button>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="step-h"><span class="step-n">04</span><h2>Product drops</h2><p class="help">TYTGEAR products pop up with your code, so viewers can buy with your discount.</p></div>
+        <div class="lock" id="lockBox"><b>Product drops</b>Every drop comes from a different category, and every product shows before any repeats.</div>
+        <div id="onOffRow">
+          <span class="lbl">Drops</span>
+          <div class="opts" data-k="popOn" data-type="radio">
+            <button class="opt" type="button" data-v="true">Enabled</button>
+            <button class="opt" type="button" data-v="false">Disabled</button>
+          </div>
+        </div>
+        <div id="popSettings">
+          <span class="lbl" style="margin-top:18px">Frequency</span>
+          <div class="opts" data-k="popEvery" data-type="radio">
+            <button class="opt" type="button" data-v="5">Every 5 min</button>
+            <button class="opt" type="button" data-v="10">Every 10 min</button>
+            <button class="opt" type="button" data-v="15">Every 15 min</button>
+          </div>
+          <span class="lbl" style="margin-top:18px">Placement</span>
+          <div class="opts" data-k="popMode" data-type="radio">
+            <button class="opt" type="button" data-v="together">With my tag · one link</button>
+            <button class="opt" type="button" data-v="separate">Separate link</button>
+          </div>
+          <div id="posRow">
+            <span class="lbl" style="margin-top:18px">Position</span>
+            <div class="opts" data-k="popPos" data-type="radio">
+              <button class="opt" type="button" data-v="right">Beside tag</button>
+              <button class="opt" type="button" data-v="above">Above tag</button>
+            </div>
+          </div>
+          <div class="linkbox" id="dropsBox" hidden>
+            <div><b>Drops link</b>Add it as its own Browser source, size <span id="dropsSize"></span>, and place it anywhere.</div>
+            <button type="button" id="copyDrops">Copy drops link</button>
+          </div>
+        </div>
+        <ul class="cats" id="cats"></ul>
+      </section>
+
+      <details class="more">
+        <summary>More settings</summary>
+        <div class="row2" style="margin-top:16px">
+          <div><label class="lbl" for="f-badge">Badge text</label><input type="text" id="f-badge" data-k="badge" maxlength="4"></div>
+          <div><label class="lbl" for="f-rotate">Line change (sec)</label><input type="text" id="f-rotate" data-k="rotate" inputmode="numeric"></div>
+        </div>
+        <label class="lbl" for="f-width">Tag width · <span id="v-width"></span></label>
+        <input type="range" id="f-width" data-k="width" min="380" max="760" step="10">
+        <label class="lbl" for="f-scale">Overall size · <span id="v-scale"></span></label>
+        <input type="range" id="f-scale" data-k="scale" min="0.6" max="1.6" step="0.05">
+        <label class="lbl" for="f-mode">Tag visibility</label>
+        <select id="f-mode" data-k="mode"><option value="always">Always on screen</option><option value="interval">Enter every so often</option></select>
+        <div class="row2" id="intervalRow">
+          <div><label class="lbl" for="f-showFor">Show for (sec)</label><input type="text" id="f-showFor" data-k="showFor" inputmode="numeric"></div>
+          <div><label class="lbl" for="f-every">Repeat every (sec)</label><input type="text" id="f-every" data-k="every" inputmode="numeric"></div>
+        </div>
+        <button class="btn ghost" id="reset" type="button" style="margin-top:18px">Reset all settings</button>
+      </details>
+    </aside>
+
+    <main class="view">
+      <div class="view-h">
+        <h3>Preview</h3>
+        <button class="btn" id="replay" type="button">Replay tag</button>
+        <button class="btn ghost" id="testPop" type="button">Show a product drop</button>
+      </div>
+      <div class="stageBox" id="stageBox">
+        <div class="stage" id="stage">
+          <div class="stage-label">GAMEPLAY</div>
+          <div class="cam"><b>CAM 01</b>
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="32" r="18"/><path d="M12 100c0-24 17-40 38-40s38 16 38 40z"/></svg>
+          </div>
+          <div id="stageHost" class="host"></div>
+        </div>
+      </div>
+      <div class="cap"><span>1920 × 1080 · webcam bottom-left</span><span id="sizeCap"></span></div>
+      <div class="obs">
+        <h4>Add to OBS</h4>
+        <ol>
+          <li><span>Press <b>Copy OBS link</b> at the top.</span></li>
+          <li><span>In OBS open <b>Sources → + → Browser</b>, paste the link, set size to <b id="obsSize"></b>.</span></li>
+          <li><span>Drag it under your webcam. After any change here, copy the link again.</span></li>
+          <li id="obsDropsLi" hidden><span>For drops, add a second Browser source with <b>Copy drops link</b> (step 04), size <b id="obsDropsSize"></b>, anywhere on screen.</span></li>
+        </ol>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script>
+(function(){
+/* =====================================================================
+   TYTGEAR BRAND SETTINGS — controlled by TYTGEAR, not by creators.
+   Products come from tytgear.in. On load the overlay tries the live store
+   (liveCatalog); if that is blocked it uses the snapshot below.
+   Drops rotate through every CATEGORY in turn, and through every product
+   inside each category before repeating, so all varieties get shown.
+   ===================================================================== */
+const BRAND={
+  shop:"tytgear.in",
+  offer:"10% OFF",
+  currency:"₹",
+  popupSeconds:14,
+  firstPopupAfter:45,
+  allowedEvery:[5,10,15],
+  allowDisable:true,        // false = creators can't turn drops off (the on/off switch is hidden and drops are forced on)
+  imgBase:"https://tytgear.in/wp-content/uploads/",
+  liveCatalog:"https://tytgear.in/wp-json/wc/store/v1/products?per_page=100",
+  // snapshot taken 2026-11-18 (in-stock only): [name, category, minPrice, maxPrice, photos, sizes, slug]
+  products:[
+    ["Lightning Sprinter Neon Skyline Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/11/60-1-300x400.jpg", "2026/11/60-300x400.jpg", "2026/11/60-2-300x400.jpg", "2026/11/60-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "lightning-sprinter-neon-skyline-mousepad"],
+    ["Abyss Dragon Midnight Lake Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/58-1-300x400.jpg", "2026/11/58-300x400.jpg", "2026/11/58-2-300x400.jpg", "2026/11/58-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "abyss-dragon-midnight-lake-mousepad"],
+    ["Spirit Dragon Frozen Ruins Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/57-1-300x400.jpg", "2026/11/57-300x400.jpg", "2026/11/57-2-300x400.jpg", "2026/11/57-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "spirit-dragon-frozen-ruins-mousepad"],
+    ["F1 Lewis Hamilton 44 Paper Cut Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/56-1-300x400.jpg", "2026/11/56-300x400.jpg", "2026/11/56-2-300x400.jpg", "2026/11/56-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "lewis-hamilton-44-paper-cut-mousepad"],
+    ["F1 Lewis Hamilton 44 Blue and Gold Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/55-1-300x400.jpg", "2026/11/55-300x400.jpg", "2026/11/55-2-300x400.jpg", "2026/11/55-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "lewis-hamilton-44-blue-and-gold-mousepad"],
+    ["Frost Dragon Moonlit Kingdom Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/54-1-300x400.jpg", "2026/11/54-300x400.jpg", "2026/11/54-2-300x400.jpg", "2026/11/54-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "frost-dragon-moonlit-kingdom-mousepad"],
+    ["F1 Lewis Hamilton Purple Legacy Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/53-1-300x400.jpg", "2026/11/53-300x400.jpg", "2026/11/53-2-300x400.jpg", "2026/11/53-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "lewis-hamilton-purple-legacy-mousepad"],
+    ["F1 Lewis Hamilton 44 Silver Arrow Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/52-1-300x400.jpg", "2026/11/52-300x400.jpg", "2026/11/52-2-300x400.jpg", "2026/11/52-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "lewis-hamilton-44-silver-arrow-mousepad"],
+    ["F1 Max Verstappen The Helmet Blueprint Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/48-1-300x400.jpg", "2026/11/48-300x400.jpg", "2026/11/48-2-300x400.jpg", "2026/11/48-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "max-verstappen-the-helmet-blueprint-mousepad"],
+    ["F1 Max Verstappen The Racing Line Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/47-1-300x400.jpg", "2026/11/47-300x400.jpg", "2026/11/47-2-300x400.jpg", "2026/11/47-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "max-verstappen-the-racing-line-mousepad"],
+    ["F1 Max Verstappen 03 Apex Orange Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/46-1-300x400.jpg", "2026/11/46-300x400.jpg", "2026/11/46-2-300x400.jpg", "2026/11/46-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "max-verstappen-03-apex-orange-mousepad"],
+    ["F1 Max Verstappen The Perfect Lap Midnight Blueprint Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/45-1-300x400.jpg", "2026/11/45-300x400.jpg", "2026/11/45-2-300x400.jpg", "2026/11/45-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "max-verstappen-the-perfect-lap-midnight-blueprint-mousepad"],
+    ["F1 Max Verstappen The Perfect Lap Cream Blueprint Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/44-1-300x400.jpg", "2026/11/44-300x400.jpg", "2026/11/44-2-300x400.jpg", "2026/11/44-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "max-verstappen-the-perfect-lap-cream-blueprint-mousepad"],
+    ["F1 Max Verstappen Zandvoort Dutch GP Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/43-1-300x400.jpg", "2026/11/43-300x400.jpg", "2026/11/43-2-300x400.jpg", "2026/11/43-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "max-verstappen-zandvoort-dutch-gp-mousepad"],
+    ["JoJo Josuke Higashikata Heart and Anchor Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/41-1-300x400.jpg", "2026/11/41-300x400.jpg", "2026/11/41-2-300x400.jpg", "2026/11/41-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "josuke-higashikata-heart-and-anchor-mousepad"],
+    ["JoJo Jotaro Hat and Chain Star Platinum Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/40-1-300x400.jpg", "2026/11/40-300x400.jpg", "2026/11/40-2-300x400.jpg", "2026/11/40-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "jotaro-hat-and-chain-star-platinum-mousepad"],
+    ["Cloud Dreamer Lavender Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/11/39-1-300x400.jpg", "2026/11/39-300x400.jpg", "2026/11/39-2-300x400.jpg", "2026/11/39-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "cloud-dreamer-lavender-mousepad"],
+    ["Cozy Tea Girl Plum Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/11/38-1-300x400.jpg", "2026/11/38-300x400.jpg", "2026/11/38-2-300x400.jpg", "2026/11/38-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "cozy-tea-girl-plum-mousepad"],
+    ["JoJo Jolyne Cujoh Butterfly Lavender Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/37-1-300x400.jpg", "2026/11/37-300x400.jpg", "2026/11/37-2-300x400.jpg", "2026/11/37-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "jolyne-cujoh-butterfly-lavender-mousepad"],
+    ["JoJo Dio Brando Moonlight Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/36-1-300x400.jpg", "2026/11/36-300x400.jpg", "2026/11/36-2-300x400.jpg", "2026/11/36-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "dio-brando-moonlight-mousepad"],
+    ["JoJo Jolyne Cujoh Moonlit City Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/35-1-300x400.jpg", "2026/11/35-300x400.jpg", "2026/11/35-2-300x400.jpg", "2026/11/35-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "jolyne-cujoh-moonlit-city-mousepad"],
+    ["JoJo Jotaro Kujo Purple Night Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/34-1-300x400.jpg", "2026/11/34-300x400.jpg", "2026/11/34-2-300x400.jpg", "2026/11/34-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "jotaro-kujo-purple-night-mousepad"],
+    ["BMW M5 Drift Smoke Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/11/32-1-300x400.jpg", "2026/11/32-300x400.jpg", "2026/11/32-2-300x400.jpg", "2026/11/32-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "bmw-m5-drift-smoke-mousepad"],
+    ["Horned Warlord Ruined Kingdom Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/29-1-300x400.jpg", "2026/11/29-300x400.jpg", "2026/11/29-2-300x400.jpg", "2026/11/29-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "horned-warlord-ruined-kingdom-mousepad"],
+    ["Pokémon Mew Master Ball Pastel Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/11/27-1-300x400.jpg", "2026/11/27-300x400.jpg", "2026/11/27-2-300x400.jpg", "2026/11/27-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "mew-master-ball-pastel-mousepad"],
+    ["Shadow Reaper Blue Lightning Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/26-1-300x400.jpg", "2026/11/26-300x400.jpg", "2026/11/26-2-300x400.jpg", "2026/11/26-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "shadow-reaper-blue-lightning-mousepad"],
+    ["Memento Mori Skull Garden Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/11/24-1-300x400.jpg", "2026/11/24-300x400.jpg", "2026/11/24-2-300x400.jpg", "2026/11/24-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "memento-mori-skull-garden-mousepad"],
+    ["Marvel Loki God of Stories Poster", "Marvel Posters", 699, 1399, ["2026/09/Loki-MAP-300x400.webp", "2026/09/Loki-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "loki-god-of-stories-poster"],
+    ["Valorant Viper Poster", "Gaming Posters", 699, 1399, ["2026/09/Viper-MAP-300x400.webp", "2026/09/Viper-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "viper-valorant-poster"],
+    ["Valorant Sage Poster", "Gaming Posters", 699, 1399, ["2026/09/Sage-MAP-300x400.webp", "2026/09/Sage-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "sage-valorant-poster"],
+    ["Valorant Killjoy Poster", "Gaming Posters", 699, 1399, ["2026/09/Killjoy-MAP-300x400.webp", "2026/09/Killjoy-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "killjoy-valorant-poster"],
+    ["Valorant Jett Poster", "Gaming Posters", 699, 1399, ["2026/09/Jett-MAP-300x400.webp", "2026/09/Jett-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "jett-valorant-poster"],
+    ["Valorant Fade Poster", "Gaming Posters", 699, 1399, ["2026/09/Fade-MAP-300x400.webp", "2026/09/Fade-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "fade-valorant-poster"],
+    ["Valorant Astra Poster", "Gaming Posters", 699, 1399, ["2026/09/Astra-MAP-300x400.webp", "2026/09/Astra-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "astra-valorant-poster"],
+    ["Naruto Madara Uchiha Poster", "Anime Posters", 699, 1399, ["2026/09/Madara-MAP-300x400.webp", "2026/09/Madara-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "madara-uchiha-poster"],
+    ["Naruto Hinata Hyuga Poster", "Anime Posters", 699, 1399, ["2026/09/Hinata-MAP-300x400.webp", "2026/09/Hinata-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "hinata-hyuga-poster"],
+    ["You Are Your Only Limit Poster", "Gym & Fitness Posters", 699, 1399, ["2026/09/Gym3-MAP-300x400.webp", "2026/09/Gym3-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "you-are-your-only-limit-poster"],
+    ["One More Rep Poster", "Gym & Fitness Posters", 699, 1399, ["2026/09/GymLift-MAP-300x400.webp", "2026/09/GymLift-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "one-more-rep-poster"],
+    ["Gym Mode On Poster", "Gym & Fitness Posters", 699, 1399, ["2026/09/GymOn-MAP-300x400.webp", "2026/09/GymOn-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "gym-mode-on-poster"],
+    ["Demon Slayer Tengen Uzui Poster", "Anime Posters", 699, 1399, ["2026/09/Tenzen-MAP-300x400.webp", "2026/09/Tenzen-FP2-300x400.webp"], ["11.7x15.7 inch (Medium)", "8x11.7 inch (Small)", "A3", "A4"], "tengen-uzui-poster"],
+    ["It’s Not Over Until I Win Small Mousepad", "Gaming Mousepads", 349, 349, ["2026/08/INO-1-300x400.webp", "2026/08/INO-1-300x400.webp", "2026/08/INO-2-300x400.webp", "2026/08/INO-3-300x400.webp"], ["Small"], "its-not-over-small-mousepad"],
+    ["Minecraft Creeper Green Small Mousepad", "Gaming Mousepads", 349, 349, ["2026/08/Creeper-1-300x400.webp", "2026/08/Creeper-1-300x400.webp", "2026/08/creeper-2-300x400.webp", "2026/08/creeper-3-300x400.webp"], ["Small"], "creeper-green-small-mousepad"],
+    ["Contour White Small Mousepad", "Original Art & Abstract Mousepads", 349, 349, ["2026/08/topo-white-1-300x400.webp", "2026/08/topo-white-2-300x400.webp", "2026/08/topo-white-3-300x400.webp", "2026/08/topo-white-1-300x400.webp"], ["Small"], "contour-white-small-mousepad"],
+    ["Contour Black Small Mousepad", "Original Art & Abstract Mousepads", 349, 349, ["2026/08/topo-black-1-300x400.webp", "2026/08/topo-black-1-300x400.webp", "2026/08/topo-black-2-300x400.webp", "2026/08/topo-black-3-300x400.webp"], ["Small"], "contour-black-small-mousepad"],
+    ["Marvel Pink Spider Logo Small Mousepad", "Marvel & Comics Mousepads", 349, 349, ["2026/08/spidy-logo-1-300x400.webp", "2026/08/spidy-logo-1-300x400.webp", "2026/08/spidy-logo-2-300x400.webp", "2026/08/spidy-logo-3-300x400.webp"], ["Small"], "pink-spider-small-mousepad"],
+    ["Marvel Spider-Gwen Small Mousepad", "Marvel & Comics Mousepads", 349, 349, ["2026/08/gwen-1-300x400.webp", "2026/08/gwen-1-300x400.webp", "2026/08/gwen-2-300x400.webp", "2026/08/gwen-3-300x400.webp"], ["Small"], "spider-gwen-small-mousepad"],
+    ["Marvel Spider-Man Red Spider Logo Small Mousepad", "Marvel & Comics Mousepads", 349, 349, ["2026/08/spidy-1-300x400.webp", "2026/08/spidy-1-300x400.webp", "2026/08/spidy-2-300x400.webp", "2026/08/spidy-3-300x400.webp"], ["Small"], "spider-comic-red-small-mousepad"],
+    ["Moonlit Blossom Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/07/random31-300x400.webp", "2026/07/random32-300x400.webp", "2026/07/random33-300x400.webp", "2026/07/random34-300x400.webp"], ["60x30 cm", "80x33 cm"], "moonlit-blossom-mousepad"],
+    ["Smoking Peak Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/07/random21-300x400.webp", "2026/07/random22-300x400.webp", "2026/07/random23-300x400.webp", "2026/07/random24-300x400.webp"], ["60x30 cm", "80x33 cm"], "smoking-peak-mousepad"],
+    ["Harry Potter Hogwarts Starry Night Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/07/random11-300x400.webp", "2026/07/random12-300x400.webp", "2026/07/random13-300x400.webp", "2026/07/random14-300x400.webp"], ["60x30 cm", "80x33 cm"], "hogwarts-starry-night-mousepad"],
+    ["Yuki Limited Edition Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/07/japgirl-300x400.webp", "2026/07/japgirl2-300x400.webp", "2026/07/japgirl3-300x400.webp", "2026/07/japgirl4-300x400.webp"], ["60x30 cm", "80x33 cm"], "yuki-limited-edition-mousepad"],
+    ["Red Sun Pagoda Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/07/japcastle-300x400.webp", "2026/07/japcastle2-300x400.webp", "2026/07/japcastle3-300x400.webp", "2026/07/japcastle4-300x400.webp"], ["60x30 cm", "80x33 cm"], "red-sun-pagoda-mousepad"],
+    ["F1 Mercedes-AMG Petronas Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/07/f1car-300x400.webp", "2026/07/f1car2-300x400.webp", "2026/07/f1car3-300x400.webp", "2026/07/f1car4-300x400.webp"], ["60x30 cm", "80x33 cm"], "amg-petronas-mousepad"],
+    ["Reaper’s Grasp Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/07/ghost-300x400.webp", "2026/07/ghost2-300x400.webp", "2026/07/ghost3-300x400.webp", "2026/07/ghost4-300x400.webp"], ["60x30 cm", "80x33 cm"], "reapers-grasp-mousepad"],
+    ["Marvel Moon Knight Mousepad", "Marvel & Comics Mousepads", 799, 999, ["2026/07/moonknight-300x400.webp", "2026/07/moonknight2-300x400.webp", "2026/07/moonknight3-300x400.webp", "2026/07/moonknight4-300x400.webp"], ["60x30 cm", "80x33 cm"], "moon-knight-mousepad"],
+    ["Crimson Ronin Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/07/samurai-300x400.webp", "2026/07/samurai2-300x400.webp", "2026/07/samurai3-300x400.webp", "2026/07/samurai4-300x400.webp"], ["60x30 cm", "80x33 cm"], "crimson-ronin-mousepad"],
+    ["Topographical Mousepad – White", "Original Art & Abstract Mousepads", 799, 999, ["2026/07/topo-white-300x400.webp", "2026/07/topo-white2-300x400.webp", "2026/07/topo-white3-300x400.webp", "2026/07/topo-white4-300x400.webp"], ["60x30 cm", "80x33 cm"], "topographical-mousepad-white"],
+    ["Topographical Mousepad – Black", "Original Art & Abstract Mousepads", 799, 999, ["2026/07/topo-black-300x400.webp", "2026/07/topo-black2-300x400.webp", "2026/07/topo-black3-300x400.webp", "2026/07/topo-black4-300x400.webp"], ["60x30 cm", "80x33 cm"], "topographical-mousepad-black"],
+    ["One Piece Monkey D Luffy Gear 5 Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/07/luffy-300x400.webp", "2026/07/luffy2-300x400.webp", "2026/07/luffy3-300x400.webp", "2026/07/luffy4-300x400.webp"], ["60x30 cm", "80x33 cm"], "monkey-d-luffy-gear-5-mousepad"],
+    ["Sukhoi Su-57 Felon Mousepad", "Motorsport & Vehicles Mousepads", 799, 999, ["2026/07/sukhoi-300x400.webp", "2026/07/sukhoi2-300x400.webp", "2026/07/sukhoi3-300x400.webp", "2026/07/sukhoi4-300x400.webp"], ["60x30 cm", "80x33 cm"], "su-57-felon-mousepad"],
+    ["Demon Slayer Mitsuri Kanroji Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/07/mitsuri-300x400.webp", "2026/07/mitsuri2-300x400.webp", "2026/07/mitsuri3-300x400.webp", "2026/07/mitsuri4-300x400.webp"], ["60x30 cm", "80x33 cm"], "mitsuri-kanroji-mousepad"],
+    ["Demon Slayer Obanai Iguro Mousepad", "Anime & Manga Mousepads", 799, 999, ["2026/07/obanoi-300x400.webp", "2026/07/obanoi2-300x400.webp", "2026/07/obanoi3-300x400.webp", "2026/07/obanoi4-300x400.webp"], ["60x30 cm", "80x33 cm"], "obanai-iguro-mousepad"]
+  ]
+};
+let CATALOG=BRAND.products.map(([name,cat,lo,hi,imgs,sizes,slug])=>({name,cat,lo,hi,imgs,sizes,slug}));
+const decodeHtml=s=>{const t=document.createElement("textarea");t.innerHTML=s;return t.value;};
+function fromStore(j){
+  return j.filter(p=>p.is_in_stock&&p.images&&p.images.length).map(p=>{
+    const pr=p.prices,d=10**pr.currency_minor_unit;
+    const lo=pr.price_range?+pr.price_range.min_amount/d:+pr.price/d,hi=pr.price_range?+pr.price_range.max_amount/d:lo;
+    const cats=p.categories.map(c=>decodeHtml(c.name));
+    const g=n=>(p.attributes.find(a=>a.name===n)||{terms:[]}).terms.map(t=>decodeHtml(t.name));
+    return {name:decodeHtml(p.name),cat:cats.find(c=>!/^(Mousepads|Posters)$/.test(c))||cats[0]||"",lo,hi,
+      imgs:p.images.slice(0,4).map(i=>i.thumbnail||i.src),sizes:[...g("Mousepad Size"),...g("Poster Size")],slug:p.slug};
+  });
+}
+let catalogLive=false,rr=null;
+const catalogReady=(async()=>{
+  try{
+    const ac=new AbortController();setTimeout(()=>ac.abort(),6000);
+    const r=await fetch(BRAND.liveCatalog,{signal:ac.signal,referrerPolicy:"no-referrer"});
+    if(r.ok){const live=fromStore(await r.json());if(live.length){CATALOG=live;rr=null;catalogLive=true;}}
+  }catch(e){/* blocked or offline: keep snapshot */}
+})();
+
+const FONTS={
+  shoulders:{f:"'Big Shoulders Display',Impact,'Arial Narrow',sans-serif",w:"900"},
+  anton:{f:"Anton,Impact,'Arial Narrow',sans-serif",w:"400"},
+  archivo:{f:"'Archivo Black','Arial Black',sans-serif",w:"400"}
+};
+const DEFAULTS={name:"NovaPlays",code:"",lines:["@yourhandle","Live weekdays 8PM IST"],badge:"TYT",finish:"ink",font:"shoulders",
+  enter:"shutter",ticker:true,scramble:true,timecode:true,halftone:true,marks:true,rotate:5,mode:"always",showFor:15,every:60,
+  width:520,scale:1,popEvery:10,popPos:"right",popOn:true,popMode:"together",c1:"#121417",c2:"#f4f4f4",c3:"#ff4d2e"};
+
+const TAGH=118,POPW=444,POPH=288,GAP=20;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=(v,d,min,max)=>{v=parseFloat(v);if(!isFinite(v))v=d;return Math.min(max,Math.max(min,v));};
+const bool=v=>v===true||v==="true"||v===1;
+const pick=(v,list,d)=>list.includes(v)?v:d;
+function clean(c){
+  c=Object.assign({},DEFAULTS,c||{});
+  if(!Array.isArray(c.lines))c.lines=String(c.lines||"").split("\n");
+  c.lines=c.lines.map(s=>String(s).trim()).filter(Boolean).slice(0,8);
+  c.name=String(c.name||"").trim().slice(0,24)||"NovaPlays";
+  c.code=String(c.code||"").toUpperCase().replace(/[^A-Z0-9_-]/g,"").slice(0,16);
+  c.badge=String(c.badge||"").slice(0,4);
+  c.finish=pick(c.finish,["ink","paper","mono","custom"],"ink");
+  ["c1","c2","c3"].forEach(k=>{if(!/^#[0-9a-f]{6}$/i.test(c[k]))c[k]=DEFAULTS[k];});
+  c.font=pick(c.font,Object.keys(FONTS),"shoulders");
+  c.enter=pick(c.enter,["shutter","wipe","cut","stamp","slide"],"shutter");
+  ["ticker","scramble","timecode","halftone","marks"].forEach(k=>c[k]=bool(c[k]));
+  c.rotate=num(c.rotate,5,2,60);c.showFor=num(c.showFor,15,3,600);c.every=num(c.every,60,8,3600);
+  if(c.every<c.showFor+3)c.every=c.showFor+3;
+  c.width=num(c.width,520,380,760);c.scale=num(c.scale,1,.6,1.6);
+  // Frequency is clamped to TYTGEAR's allowed values; drops can only be off if BRAND.allowDisable is true.
+  c.popEvery=+c.popEvery;if(!BRAND.allowedEvery.includes(c.popEvery))c.popEvery=BRAND.allowedEvery[1];
+  c.popPos=pick(c.popPos,["right","above"],"right");
+  c.popOn=BRAND.allowDisable?bool(c.popOn):true;
+  c.popMode=pick(c.popMode,["together","separate"],"together");
+  return c;
+}
+function lum(h){const n=parseInt(h.slice(1),16),f=v=>{v/=255;return v<=.03928?v/12.92:((v+.055)/1.055)**2.4;};return .2126*f(n>>16)+.7152*f(n>>8&255)+.0722*f(n&255);}
+const onColor=h=>lum(h)>.36?"#0b0b0b":"#f4f4f4";
+const rgba=(h,a)=>{const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;};
+function customVars(c){
+  if(c.finish!=="custom")return "";
+  const t=onColor(c.c3);
+  return `--k:${c.c1};--w:${c.c2};--sk:${c.c3};--sw:${t};--line:${rgba(c.c2,.2)};--edge:${c.c3};--bb:${c.c3};--bf:${t};`;
+}
+const encode=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+function decode(s){try{s=s.replace(/-/g,"+").replace(/_/g,"/");return JSON.parse(decodeURIComponent(escape(atob(s))));}catch(e){return null;}}
+// part: "overlay" = main OBS link, "pop" = separate drops link, "preview" = editor stage
+function layout(c,part){
+  const tag=part!=="pop";
+  const pop=c.popOn&&(part==="pop"||part==="preview"||c.popMode==="together");
+  if(!pop)return {w:c.width,h:TAGH,pl:0,pb:0,tag:true,pop:false};
+  if(!tag)return {w:POPW,h:POPH,pl:0,pb:0,tag:false,pop:true};
+  const pos=c.popMode==="separate"?"right":c.popPos;
+  return pos==="right"
+    ?{w:c.width+GAP+POPW,h:Math.max(TAGH,POPH),pl:c.width+GAP,pb:0,tag:true,pop:true}
+    :{w:Math.max(c.width,POPW),h:TAGH+GAP+POPH,pl:0,pb:TAGH+GAP,tag:true,pop:true};
+}
+function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+function barcode(seed,w,h){
+  let r=hash(seed)||1,x=0,out="";
+  const rnd=()=>{r^=r<<13;r>>>=0;r^=r>>>17;r^=r<<5;r>>>=0;return r;};
+  while(x<w){const bw=1+rnd()%3;if(x+bw>w)break;out+=`<rect x="${x}" y="0" width="${bw}" height="${h}"/>`;x+=bw+1+rnd()%3;}
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" fill="currentColor" aria-hidden="true">${out}</svg>`;
+}
+const GL="ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#/\\_-+=<>";
+function scramble(el,text,ms){
+  if(!el)return;ms=ms||650;
+  if(el._scr)cancelAnimationFrame(el._scr);
+  const t0=performance.now();
+  const step=now=>{
+    const p=Math.min(1,(now-t0)/ms),n=Math.floor(p*text.length);
+    let s=text.slice(0,n);for(let i=n;i<text.length;i++)s+=text[i]===" "?" ":GL[Math.random()*GL.length|0];
+    el.textContent=s;el._scr=p<1?requestAnimationFrame(step):null;
+  };
+  el._scr=requestAnimationFrame(step);
+}
+function bandHTML(text,minPx){
+  // repeat the text so one copy is wider than the band, then double it for a seamless loop
+  let one=text;while(one.length*8.6<minPx)one+=text;
+  return {html:`<span>${esc(one)}</span><span>${esc(one)}</span>`,secs:Math.max(12,one.length*.16)};
+}
+const pad=(n,l)=>String(Math.floor(n)).padStart(l||2,"0");
+
+/* ---------- rotation: every category in turn, every product inside it before repeats ---------- */
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+function nextProduct(){
+  if(!rr)rr={cats:shuffle([...new Set(CATALOG.map(p=>p.cat))]),i:0,bags:{}};
+  if(rr.i>=rr.cats.length){const last=rr.cats[rr.cats.length-1];rr.cats=shuffle(rr.cats);if(rr.cats.length>1&&rr.cats[0]===last)rr.cats.push(rr.cats.shift());rr.i=0;}
+  const cat=rr.cats[rr.i++];
+  if(!rr.bags[cat]||!rr.bags[cat].length)rr.bags[cat]=shuffle(CATALOG.filter(p=>p.cat===cat));
+  return rr.bags[cat].pop();
+}
+const imgUrl=u=>/^https?:/.test(u)?u:BRAND.imgBase+u;
+// tytgear.in blocks images requested from other sites, but allows requests with no referrer
+const preload=u=>new Promise(r=>{const i=new Image();i.referrerPolicy="no-referrer";i.onload=i.onerror=r;i.src=u;});
+const shortSize=s=>s.replace(/^.*\((.*)\)\s*$/,"$1");
+const money=n=>BRAND.currency+Math.round(n).toLocaleString("en-IN");
+function series(p){
+  if(/poster/i.test(p.cat))return "WALL POSTER";
+  if(p.sizes.some(s=>/small/i.test(s))||/small/i.test(p.name))return "SMALL SERIES";
+  return "HYBRID SERIES";
+}
+
+/* ---------- entrances ---------- */
+const OUT="inset(-12px -12px -12px -12px)";
+const ENTER={
+  shutter:{k:[{clipPath:"inset(50% -12px 50% -12px)"},{clipPath:OUT}],o:{duration:520,easing:"cubic-bezier(.7,0,.2,1)"}},
+  wipe:{k:[{clipPath:"inset(-12px 100% -12px -12px)"},{clipPath:OUT}],o:{duration:620,easing:"cubic-bezier(.65,0,.25,1)"}},
+  cut:{k:[{opacity:0,transform:"translateX(-6px)",easing:"step-end"},{opacity:1,transform:"translateX(3px)",offset:.12,easing:"step-end"},{opacity:0,transform:"translateX(3px)",offset:.22,easing:"step-end"},{opacity:1,transform:"translateX(-2px)",offset:.38,easing:"step-end"},{opacity:.4,transform:"translateX(-2px)",offset:.5,easing:"step-end"},{opacity:1,transform:"none",offset:.62},{opacity:1,transform:"none"}],o:{duration:560}},
+  stamp:{k:[{transform:"scale(1.16)",opacity:0},{transform:"scale(.985)",opacity:1,offset:.6},{transform:"none",opacity:1}],o:{duration:380,easing:"cubic-bezier(.2,.9,.1,1)"}},
+  slide:{k:[{transform:"translateX(-48px)",opacity:0,clipPath:"inset(-12px 100% -12px -12px)"},{transform:"none",opacity:1,clipPath:OUT}],o:{duration:560,easing:"cubic-bezier(.2,.9,.2,1)"}}
+};
+
+function mount(host,raw,opts){
+  opts=opts||{};
+  const c=clean(raw),F=FONTS[c.font];
+  if(host._tg)host._tg.destroy();
+  const timers=[],intervals=[];
+  const later=(fn,ms)=>{const t=setTimeout(fn,ms);timers.push(t);return t;};
+  const every=(fn,ms)=>{const t=setInterval(fn,ms);intervals.push(t);return t;};
+  const L=layout(c,opts.part||"preview"),t0=Date.now();
+  host.style.width=Math.ceil(L.w*c.scale)+"px";host.style.height=Math.ceil(L.h*c.scale)+"px";
+  const lines=c.lines.slice();
+  if(c.code)lines.push("Code "+c.code+" · "+BRAND.offer+" at "+BRAND.shop);
+  if(!lines.length)lines.push(BRAND.shop);
+  const tickText=["TYTGEAR × "+c.name,c.code?"Use code "+c.code:null,c.code?BRAND.offer:null,BRAND.shop,"Creator network",""].filter(v=>v!==null).join("  ✦  ");
+  const tb=bandHTML(tickText.toUpperCase(),c.width*1.2);
+  const no="NO."+pad(hash(c.name)%900+100,3);
+
+  host.innerHTML="";
+  const root=document.createElement("div");
+  root.className=`tg-root f-${c.finish}${c.halftone?" ht":""}${c.marks?"":" nomarks"}${c.width<440?" narrow":""}`;
+  root.style.cssText=`width:${L.w}px;height:${L.h}px;transform:scale(${c.scale});--disp:${F.f};--dw:${F.w};--tw:${c.width}px;${customVars(c)}`;
+  root.innerHTML=
+   `<div class="tg-unit"${L.tag?"":" hidden"}><div class="tg-anim"><div class="tg">`+
+     `<i class="mk tl"></i><i class="mk tr"></i><i class="mk bl"></i><i class="mk br"></i>`+
+     (c.ticker
+       ?`<div class="band ticking" style="--td:${tb.secs}s"><div class="band-in">${tb.html}</div></div>`
+       :`<div class="band static"><span>TYTGEAR × CREATOR</span><span>${esc(BRAND.shop.toUpperCase())}</span></div>`)+
+     `<div class="tg-main">`+
+       (c.badge?`<div class="tg-badge"><b>${esc(c.badge)}</b><small>CREATOR</small></div>`:"")+
+       `<div class="tg-txt"><div class="tg-name">${esc(c.name)}</div><div class="tg-sub">${esc(lines[0])}</div></div>`+
+       `<div class="tg-side"><span>CH.01 / IN</span>${barcode(c.name,72,22)}</div>`+
+       `<div class="wbar"></div>`+
+     `</div>`+
+     `<div class="tg-meta"><span class="rec">${c.timecode?"REC 00:00:00":"ON AIR"}</span><span>${esc(BRAND.shop)}</span><span>${no}</span><span>TYT/CN</span></div>`+
+   `</div></div></div>`+
+   `<div class="pp-unit hidden" style="left:${L.pl}px;bottom:${L.pb}px"><div class="pp-anim"><div class="pp">`+
+     `<div class="band ticking"><div class="band-in"></div></div>`+
+     `<div class="pp-body">`+
+       `<div class="pp-photo"><div class="pp-frame"><img alt="" referrerpolicy="no-referrer"><i></i><i></i><i></i><i></i><div class="fl"></div></div><div class="pp-fig"><span class="fig"></span><span>TYTGEAR</span></div></div>`+
+       `<div class="pp-info"><div class="pp-top"><span class="no"></span><span class="pp-chip"></span></div><div class="pp-cat"></div><div class="pp-name"></div>`+
+         `<div class="pp-spec"><div class="pp-row"><em>Size</em><b class="sz"></b></div><div class="pp-row pp-price"><em class="from"></em><b class="pr"></b></div></div></div>`+
+     `</div>`+
+     `<div class="pp-code"></div>`+
+   `</div></div></div>`;
+  host.appendChild(root);
+
+  const unit=root.querySelector(".tg-unit"),anim=root.querySelector(".tg-anim"),
+        nameEl=root.querySelector(".tg-name"),sub=root.querySelector(".tg-sub"),rec=root.querySelector(".rec"),
+        bands=root.querySelectorAll(".tg .band, .tg-meta"),badge=root.querySelector(".tg-badge"),wbar=root.querySelector(".wbar");
+  let rot=null;
+
+  if(c.timecode)every(()=>{const s=Math.floor((Date.now()-t0)/1000);rec.textContent=`REC ${pad(s/3600)}:${pad(s/60%60)}:${pad(s%60)}`;},1000);
+
+  function startLoops(){
+    clearInterval(rot);rot=null;
+    if(lines.length>1){let i=0;rot=every(()=>{i=(i+1)%lines.length;c.scramble?scramble(sub,lines[i],420):(sub.textContent=lines[i]);},c.rotate*1000);}
+    if(c.scramble){const g=()=>{scramble(nameEl,c.name,700);later(g,9000+Math.random()*6000);};later(g,7000);}
+  }
+  function showTag(){
+    unit.classList.remove("hidden");
+    anim.getAnimations().forEach(a=>a.cancel());
+    sub.textContent=lines[0];
+    const e=ENTER[c.enter];anim.animate(e.k,e.o);
+    if(c.enter==="wipe")wbar.animate([{opacity:1,transform:"translateX(0)"},{opacity:1,transform:`translateX(${c.width}px)`,offset:.92},{opacity:0,transform:`translateX(${c.width}px)`}],{duration:620,easing:"cubic-bezier(.65,0,.25,1)"});
+    bands.forEach((b,i)=>b.animate([{transform:"translateX(-24px)",opacity:0},{transform:"none",opacity:1}],{duration:360,delay:180+i*90,easing:"cubic-bezier(.2,.9,.2,1)",fill:"backwards"}));
+    if(badge)badge.animate([{clipPath:"inset(100% 0 0 0)"},{clipPath:"inset(0 0 0 0)"}],{duration:380,delay:220,easing:"cubic-bezier(.7,0,.2,1)",fill:"backwards"});
+    if(c.scramble)later(()=>scramble(nameEl,c.name,700),160);
+    sub.animate([{opacity:0},{opacity:.85}],{duration:300,delay:520,fill:"backwards"});
+    startLoops();
+  }
+  function hideTag(){
+    clearInterval(rot);
+    const e=ENTER[c.enter];
+    anim.animate(e.k,Object.assign({},e.o,{duration:380,direction:"reverse",fill:"forwards"})).finished.then(()=>unit.classList.add("hidden")).catch(()=>{});
+  }
+  function tagCycle(){showTag();later(()=>{hideTag();later(tagCycle,(c.every-c.showFor)*1000);},c.showFor*1000);}
+
+  /* ---- product drop ---- */
+  const pu=root.querySelector(".pp-unit"),pa=root.querySelector(".pp-anim"),q=s=>pu.querySelector(s);
+  let popBusy=false,photoT=null,cdT=null;
+  function showPopup(){
+    if(!L.pop||popBusy||!CATALOG.length)return;popBusy=true;
+    const p=nextProduct(),dur=BRAND.popupSeconds*1000,imgs=p.imgs.map(imgUrl);
+    // wait (max 2.5s) for the photos so the drop never shows an empty frame
+    Promise.race([Promise.all(imgs.map(preload)),new Promise(r=>setTimeout(r,2500))]).then(()=>{
+      if(host._tg!==ctl){popBusy=false;return;}
+      renderPopup(p,imgs,dur);
+    });
+  }
+  function renderPopup(p,imgs,dur){
+    const b=bandHTML(("New drop  ✦  "+p.cat+"  ✦  "+BRAND.shop+"  ✦  "+(c.code?"Code "+c.code+"  ✦  ":"")).toUpperCase(),POPW*1.2);
+    const band=q(".band"),bi=q(".band-in");bi.innerHTML=b.html;band.style.setProperty("--td",b.secs+"s");
+    const idx=CATALOG.indexOf(p)+1;
+    q(".no").textContent=`NO.${pad(idx,3)} / ${pad(CATALOG.length,3)}`;
+    q(".pp-chip").textContent=series(p);
+    q(".pp-cat").textContent=p.cat;
+    const nm=q(".pp-name");nm.classList.toggle("long",p.name.length>30);nm.textContent=p.name;
+    q(".sz").textContent=p.sizes.length?p.sizes.map(shortSize).join(" · "):"One size";
+    q(".from").textContent=p.hi>p.lo?"From":"Price";
+    q(".pr").textContent=money(p.lo);
+    q(".pp-code").innerHTML=(c.code
+      ?`<span class="lab">USE<br>CODE</span><span class="code">${esc(c.code)}</span><span class="off">${esc(BRAND.offer)}<br>${esc(BRAND.shop.toUpperCase())}</span>`
+      :`<span class="lab">SHOP<br>AT</span><span class="code">${esc(BRAND.shop.toUpperCase())}</span>`)+
+      `<span class="cd">00:${pad(BRAND.popupSeconds)}</span><div class="pp-prog"></div>`;
+    const img=q(".pp-frame img"),fl=q(".pp-frame .fl"),fig=q(".fig");
+    let vi=0;
+    const setPhoto=flash=>{img.src=imgs[vi];fig.textContent=`FIG.${pad(vi+1)} / ${pad(imgs.length)}`;if(flash)fl.animate([{opacity:.9},{opacity:0}],{duration:180,easing:"ease-out"});};
+    setPhoto(false);
+    clearInterval(photoT);clearInterval(cdT);
+    if(imgs.length>1)photoT=every(()=>{vi=(vi+1)%imgs.length;setPhoto(true);},Math.max(2400,(dur-1500)/imgs.length));
+    let left=BRAND.popupSeconds;const cd=q(".cd");
+    cdT=every(()=>{left=Math.max(0,left-1);cd.textContent="00:"+pad(left);},1000);
+    pu.classList.remove("hidden");
+    pa.getAnimations().forEach(a=>a.cancel());
+    pa.animate([{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0 0)"}],{duration:520,easing:"cubic-bezier(.7,0,.2,1)"});
+    q(".pp-frame").animate([{clipPath:"inset(100% 0 0 0)"},{clipPath:"inset(0 0 0 0)"}],{duration:480,delay:260,easing:"cubic-bezier(.7,0,.2,1)",fill:"backwards"});
+    q(".pp-code").animate([{transform:"translateX(-100%)"},{transform:"none"}],{duration:420,delay:360,easing:"cubic-bezier(.2,.9,.2,1)",fill:"backwards"});
+    scramble(nm,p.name,800);
+    q(".pp-prog").animate([{transform:"scaleX(1)"},{transform:"scaleX(0)"}],{duration:dur,easing:"linear",fill:"forwards"});
+    later(hidePopup,dur);
+  }
+  function hidePopup(){
+    clearInterval(photoT);clearInterval(cdT);
+    pa.animate([{clipPath:"inset(0 0 0 0)"},{clipPath:"inset(100% 0 0 0)"}],{duration:380,easing:"cubic-bezier(.7,0,.2,1)",fill:"forwards"}).finished
+      .then(()=>{pu.classList.add("hidden");popBusy=false;}).catch(()=>{popBusy=false;});
+  }
+
+  function play(){
+    timers.forEach(clearTimeout);timers.length=0;
+    if(L.tag){if(c.mode==="interval")tagCycle();else showTag();}
+    if(opts.overlay&&L.pop){ // scheduled product drops on the live overlay
+      later(function loop(){showPopup();later(loop,c.popEvery*60000);},BRAND.firstPopupAfter*1000);
+    }
+  }
+  const ctl={play,showPopup,config:c,layout:L,destroy(){timers.forEach(clearTimeout);intervals.forEach(clearInterval);host.innerHTML="";host._tg=null;}};
+  host._tg=ctl;
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{if(host._tg===ctl)play();});
+  return ctl;
+}
+
+/* =================== OVERLAY MODE (OBS) =================== */
+// #o= main link (tag, plus drops when "with my tag"), #p= separate drops link
+const m=location.hash.match(/^#([op])=(.+)$/);
+if(m){
+  document.documentElement.classList.add("overlay");
+  mount(document.getElementById("overlayHost"),decode(m[2])||DEFAULTS,{overlay:true,part:m[1]==="p"?"pop":"overlay"});
+  window.addEventListener("hashchange",()=>location.reload());
+  return;
+}
+
+/* =================== EDITOR MODE =================== */
+const KEY="tytgear-overlay-v3";
+let cfg;
+try{cfg=clean(JSON.parse(localStorage.getItem(KEY)));}catch(e){cfg=clean(DEFAULTS);}
+const $=id=>document.getElementById(id);
+const inputs=[...document.querySelectorAll("input[data-k],textarea[data-k],select[data-k]")];
+
+function drawCatalog(){
+  const counts={};CATALOG.forEach(p=>counts[p.cat]=(counts[p.cat]||0)+1);
+  const rows=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  $("cats").innerHTML=`<li class="tot"><span>In rotation · ${rows.length} categories</span><b>${pad(CATALOG.length,3)}</b></li>`+
+    rows.map(([k,n])=>`<li><span>${esc(k)}</span><b>${pad(n,3)}</b></li>`).join("");
+  $("syncLine").textContent=`${CATALOG.length} products · ${catalogLive?"live from":"snapshot of"} ${BRAND.shop}`;
+  const w=bandHTML(`${CATALOG.length} products from ${BRAND.shop}  ✦  ${rows.length} categories  ✦  drops always on  ✦  ${BRAND.offer} with creator code  ✦  black & white system  ✦  `.toUpperCase(),3000);
+  $("wire").innerHTML=w.html;
+}
+drawCatalog();catalogReady.then(drawCatalog);
+
+function fillForm(){
+  inputs.forEach(el=>{const k=el.dataset.k,v=cfg[k];el.value=k==="lines"?v.join("\n"):v;});
+  document.querySelectorAll('[data-type="radio"]').forEach(g=>g.querySelectorAll(".opt").forEach(o=>{const on=String(cfg[g.dataset.k])===o.dataset.v;o.classList.toggle("on",on);o.setAttribute("aria-pressed",on);}));
+  document.querySelectorAll('[data-type="toggle"]').forEach(o=>{o.classList.toggle("on",!!cfg[o.dataset.k]);o.setAttribute("aria-pressed",!!cfg[o.dataset.k]);});
+  syncLabels();
+}
+function syncLabels(){
+  $("v-width").textContent=cfg.width+" px";
+  $("v-scale").textContent=(+cfg.scale).toFixed(2)+"×";
+  $("intervalRow").style.display=cfg.mode==="interval"?"grid":"none";
+  $("codeWarn").style.display=cfg.code?"none":"block";
+  const sep=cfg.popOn&&cfg.popMode==="separate";
+  $("customRow").hidden=cfg.finish!=="custom";
+  const sw=$("customSw");sw.style.background=cfg.c1;sw.style.color=cfg.c2;sw.firstElementChild.style.background=cfg.c3;
+  $("onOffRow").hidden=!BRAND.allowDisable;
+  $("lockBox").firstElementChild.textContent=BRAND.allowDisable?(cfg.popOn?"Drops enabled":"Drops disabled"):"Always on";
+  $("popSettings").hidden=!cfg.popOn;
+  $("posRow").hidden=cfg.popMode!=="together";
+  $("dropsBox").hidden=!sep;
+  $("obsDropsLi").hidden=!sep;
+  $("copyLabel").textContent=sep?"Copy tag link":"Copy OBS link";
+  $("testPop").disabled=!cfg.popOn;
+}
+const stageHost=$("stageHost");
+let deb,url="",dropsUrl="";
+const sizeOf=L=>`${Math.ceil(L.w*cfg.scale+60)} × ${Math.ceil(L.h*cfg.scale+60)}`;
+function refresh(remount){
+  syncLabels();
+  try{localStorage.setItem(KEY,JSON.stringify(cfg));}catch(e){}
+  const base=location.href.split("#")[0],enc=encode(cfg);
+  url=base+"#o="+enc;dropsUrl=base+"#p="+enc;
+  const Lo=layout(cfg,"overlay"),Lp=layout(cfg,"pop"),L=layout(cfg,"preview");
+  $("obsSize").textContent=sizeOf(Lo);
+  $("dropsSize").textContent=$("obsDropsSize").textContent=sizeOf(Lp);
+  $("sizeCap").textContent=cfg.popOn&&cfg.popMode==="separate"?`Tag source ${sizeOf(Lo)} · drops source ${sizeOf(Lp)}`:`Browser source ${sizeOf(Lo)}`;
+  stageHost.style.left="20px";
+  stageHost.style.top=(860-30-(L.h-TAGH)*cfg.scale)+"px";
+  if(remount)mount(stageHost,cfg,{part:"preview"});
+}
+inputs.forEach(el=>el.addEventListener(el.tagName==="SELECT"?"change":"input",()=>{
+  const k=el.dataset.k;cfg[k]=el.value;cfg=clean(cfg);syncLabels();
+  if(k==="code"&&el.value!==cfg.code){const p=el.selectionStart;el.value=cfg.code;try{el.setSelectionRange(p,p);}catch(e){}}
+  clearTimeout(deb);deb=setTimeout(()=>refresh(true),350);
+}));
+document.querySelectorAll('[data-type="radio"] .opt').forEach(o=>o.addEventListener("click",()=>{
+  const k=o.parentElement.dataset.k;cfg[k]=o.dataset.v;cfg=clean(cfg);fillForm();refresh(true);
+  if(["popEvery","popPos","popMode"].includes(k)||(k==="popOn"&&cfg.popOn))setTimeout(()=>stageHost._tg&&stageHost._tg.showPopup(),600);
+}));
+document.querySelectorAll('[data-type="toggle"]').forEach(o=>o.addEventListener("click",()=>{cfg[o.dataset.k]=!cfg[o.dataset.k];cfg=clean(cfg);fillForm();refresh(true);}));
+
+$("replay").onclick=()=>mount(stageHost,cfg,{part:"preview"});
+$("testPop").onclick=()=>stageHost._tg&&stageHost._tg.showPopup();
+$("reset").onclick=()=>{cfg=clean(DEFAULTS);fillForm();refresh(true);};
+let toastT;
+function toast(t){const el=$("toast");el.textContent=t;el.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove("show"),2400);}
+function copyLink(link,what){
+  const done=()=>toast(cfg.code?`${what} copied · paste it into OBS`:`${what} copied · add your creator code first`);
+  const fallback=()=>{const t=document.createElement("textarea");t.value=link;document.body.appendChild(t);t.select();try{document.execCommand("copy");}catch(e){}t.remove();done();};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(done,fallback);else fallback();
+}
+$("copyTop").onclick=()=>copyLink(url,cfg.popOn&&cfg.popMode==="separate"?"Tag link":"Link");
+$("copyDrops").onclick=()=>copyLink(dropsUrl,"Drops link");
+
+const box=$("stageBox"),stage=$("stage");
+const fit=()=>{stage.style.transform=`scale(${box.clientWidth/1920})`;};
+new ResizeObserver(fit).observe(box);fit();
+
+fillForm();refresh(true);
+setTimeout(()=>stageHost._tg&&stageHost._tg.showPopup(),1800);
+})();
+</script>
+</body>
+</html>
