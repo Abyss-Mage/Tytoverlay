@@ -60,40 +60,27 @@
 .mk.br{right:-9px;bottom:-9px;border-right-width:1.5px;border-bottom-width:1.5px}
 .nomarks .mk{display:none}
 
-/* =================== PRODUCT POPUP (spec sheet) =================== */
-.pp-unit{position:absolute;width:444px}
+/* =================== PRODUCT DROP (slim bar, same build as the tag) =================== */
+.pp-unit{position:absolute;width:520px}
 .pp-unit.hidden{visibility:hidden}
-.pp{position:relative;box-sizing:border-box;width:444px;background:var(--k);color:var(--w);border:2px solid var(--edge);font-family:var(--body)}
-.pp .band{height:22px}
-.pp-body{display:grid;grid-template-columns:150px 1fr;gap:14px;height:206px;box-sizing:border-box;padding:14px}
-.pp-photo{display:flex;flex-direction:column;gap:5px;min-width:0}
-.pp-frame{position:relative;height:160px;border:1px solid var(--line);overflow:hidden;background:#000}
-.pp-frame img{display:block;width:100%;height:100%;object-fit:cover}
-.pp-frame .fl{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
-.pp-frame i{position:absolute;width:9px;height:9px;border:0 solid #fff;mix-blend-mode:difference}
-.pp-frame i:nth-of-type(1){left:5px;top:5px;border-left-width:1.5px;border-top-width:1.5px}
-.pp-frame i:nth-of-type(2){right:5px;top:5px;border-right-width:1.5px;border-top-width:1.5px}
-.pp-frame i:nth-of-type(3){left:5px;bottom:5px;border-left-width:1.5px;border-bottom-width:1.5px}
-.pp-frame i:nth-of-type(4){right:5px;bottom:5px;border-right-width:1.5px;border-bottom-width:1.5px}
-.pp-fig{display:flex;justify-content:space-between;font:500 9px/1 var(--mono);letter-spacing:.16em;opacity:.8}
-.pp-info{display:flex;flex-direction:column;min-width:0}
-.pp-top{display:flex;justify-content:space-between;align-items:center;font:500 9.5px/1 var(--mono);letter-spacing:.16em}
-.pp-chip{background:var(--bb);color:var(--bf);padding:4px 6px;font-weight:700}
-.pp-cat{font:500 9.5px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;margin-top:9px;opacity:.75}
-.pp-name{font:var(--dw) 31px/.9 var(--disp);text-transform:uppercase;letter-spacing:.005em;margin-top:5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.pp-name.long{font-size:25px}
-.pp-spec{margin-top:auto;border-top:1px solid var(--line)}
-.pp-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:6px;font:500 9.5px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase}
-.pp-row em{font-style:normal;opacity:.7}
-.pp-row b{font-weight:500;text-align:right}
-.pp-price b{font:var(--dw) 30px/1 var(--disp);letter-spacing:.01em}
-.pp-code{position:relative;display:flex;align-items:center;gap:12px;height:56px;box-sizing:border-box;padding:0 14px;background:var(--sk);color:var(--sw);overflow:hidden}
-.f-mono .pp-code{border-top:1px solid var(--line)}
-.pp-code .lab{font:700 9px/1.25 var(--mono);letter-spacing:.2em}
-.pp-code .code{font:var(--dw) 30px/1 var(--disp);letter-spacing:.06em;border:2px solid var(--sw);padding:4px 10px 3px;white-space:nowrap;max-width:170px;overflow:hidden}
-.pp-code .off{font:700 10px/1.3 var(--mono);letter-spacing:.14em}
-.pp-code .cd{margin-left:auto;font:500 18px/1 var(--mono);letter-spacing:.06em;font-variant-numeric:tabular-nums}
-.pp-prog{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--sw);transform-origin:left}
+.pp{position:relative;box-sizing:border-box;width:520px;background:var(--k);color:var(--w);border:2px solid var(--edge);font-family:var(--body)}
+.pp-main{position:relative;height:76px;display:flex;align-items:stretch;overflow:hidden}
+.ht .pp-main::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--w) 1.1px,transparent 1.5px);background-size:6px 6px;opacity:.22;-webkit-mask-image:linear-gradient(90deg,transparent 45%,#000 100%);mask-image:linear-gradient(90deg,transparent 45%,#000 100%);pointer-events:none}
+.pp-thumb{flex:0 0 76px;background:#000;border-right:1px solid var(--line);overflow:hidden}
+.pp-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.pp-txt{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 12px 0 14px}
+.pp-top{font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-name{font:var(--dw) 27px/.92 var(--disp);text-transform:uppercase;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-name.two{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:.95}
+.pp-sub{font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-sub b{font-weight:700}
+.pp-code{position:relative;flex:0 0 auto;min-width:92px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;padding:0 14px;background:var(--bb);color:var(--bf)}
+.pp-code small{font:700 8px/1 var(--mono);letter-spacing:.2em}
+.pp-code b{font:var(--dw) 26px/.9 var(--disp);letter-spacing:.05em;white-space:nowrap}
+.pp-meta{position:relative;height:18px;display:flex;border-top:1px solid var(--line);font:500 9.5px/18px var(--mono);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.pp-meta>span{padding:0 9px;border-right:1px solid var(--line)}
+.pp-meta>.cd{margin-left:auto;border-right:0;border-left:1px solid var(--line);font-variant-numeric:tabular-nums}
+.pp-prog{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--w);transform-origin:left}
 
 /* =================== OVERLAY MODE =================== */
 html.overlay,html.overlay body{background:transparent !important;margin:0;overflow:hidden}
@@ -283,26 +270,8 @@ input[type=range]{width:100%;accent-color:var(--ink)}
           </div>
         </div>
         <div id="popSettings">
-          <span class="lbl" style="margin-top:18px">Frequency</span>
-          <div class="opts" data-k="popEvery" data-type="radio">
-            <button class="opt" type="button" data-v="5">Every 5 min</button>
-            <button class="opt" type="button" data-v="10">Every 10 min</button>
-            <button class="opt" type="button" data-v="15">Every 15 min</button>
-          </div>
-          <span class="lbl" style="margin-top:18px">Placement</span>
-          <div class="opts" data-k="popMode" data-type="radio">
-            <button class="opt" type="button" data-v="together">With my tag · one link</button>
-            <button class="opt" type="button" data-v="separate">Separate link</button>
-          </div>
-          <div id="posRow">
-            <span class="lbl" style="margin-top:18px">Position</span>
-            <div class="opts" data-k="popPos" data-type="radio">
-              <button class="opt" type="button" data-v="right">Beside tag</button>
-              <button class="opt" type="button" data-v="above">Above tag</button>
-            </div>
-          </div>
-          <div class="linkbox" id="dropsBox" hidden>
-            <div><b>Drops link</b>Add it as its own Browser source, size <span id="dropsSize"></span>, and place it anywhere.</div>
+          <div class="linkbox" id="dropsBox">
+            <div><b>Drops link</b>Drops run on their own link. Add it as a second Browser source, size <span id="dropsSize"></span>, and place it anywhere.</div>
             <button type="button" id="copyDrops">Copy drops link</button>
           </div>
         </div>
@@ -374,7 +343,7 @@ const BRAND={
   currency:"₹",
   popupSeconds:14,
   firstPopupAfter:45,
-  allowedEvery:[5,10,15],
+  popEvery:10,              // minutes between drops (fixed for every creator)
   allowDisable:true,        // false = creators can't turn drops off (the on/off switch is hidden and drops are forced on)
   imgBase:"https://tytgear.in/wp-content/uploads/",
   liveCatalog:"https://tytgear.in/wp-json/wc/store/v1/products?per_page=100",
@@ -472,9 +441,9 @@ const FONTS={
 };
 const DEFAULTS={name:"TYTGEAR",code:"TYT10",lines:["@yourhandle","Live weekdays 8PM IST"],finish:"ink",font:"shoulders",
   enter:"shutter",ticker:true,scramble:true,timecode:true,halftone:true,marks:true,rotate:5,mode:"always",showFor:15,every:60,
-  width:520,scale:1,popEvery:10,popPos:"right",popOn:true,popMode:"together",c1:"#121417",c2:"#f4f4f4",c3:"#ff4d2e"};
+  width:520,scale:1,popOn:true,c1:"#121417",c2:"#f4f4f4",c3:"#ff4d2e"};
 
-const TAGH=118,POPW=444,POPH=288,GAP=20;
+const TAGH=118,POPW=520,POPH=118,GAP=20;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num=(v,d,min,max)=>{v=parseFloat(v);if(!isFinite(v))v=d;return Math.min(max,Math.max(min,v));};
 const bool=v=>v===true||v==="true"||v===1;
@@ -493,11 +462,8 @@ function clean(c){
   c.rotate=num(c.rotate,5,2,60);c.showFor=num(c.showFor,15,3,600);c.every=num(c.every,60,8,3600);
   if(c.every<c.showFor+3)c.every=c.showFor+3;
   c.width=num(c.width,520,380,760);c.scale=num(c.scale,1,.6,1.6);
-  // Frequency is clamped to TYTGEAR's allowed values; drops can only be off if BRAND.allowDisable is true.
-  c.popEvery=+c.popEvery;if(!BRAND.allowedEvery.includes(c.popEvery))c.popEvery=BRAND.allowedEvery[1];
-  c.popPos=pick(c.popPos,["right","above"],"right");
+  // Drops always use their own link at TYTGEAR's fixed frequency; creators can only switch them off if BRAND.allowDisable is true.
   c.popOn=BRAND.allowDisable?bool(c.popOn):true;
-  c.popMode=pick(c.popMode,["together","separate"],"together");
   return c;
 }
 function lum(h){const n=parseInt(h.slice(1),16),f=v=>{v/=255;return v<=.03928?v/12.92:((v+.055)/1.055)**2.4;};return .2126*f(n>>16)+.7152*f(n>>8&255)+.0722*f(n&255);}
@@ -510,16 +476,11 @@ function customVars(c){
 }
 const encode=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 function decode(s){try{s=s.replace(/-/g,"+").replace(/_/g,"/");return JSON.parse(decodeURIComponent(escape(atob(s))));}catch(e){return null;}}
-// part: "overlay" = main OBS link, "pop" = separate drops link, "preview" = editor stage
+// part: "overlay" = tag link, "pop" = drops link, "preview" = editor stage (tag with the drop beside it)
 function layout(c,part){
-  const tag=part!=="pop";
-  const pop=c.popOn&&(part==="pop"||part==="preview"||c.popMode==="together");
-  if(!pop)return {w:c.width,h:TAGH,pl:0,pb:0,tag:true,pop:false};
-  if(!tag)return {w:POPW,h:POPH,pl:0,pb:0,tag:false,pop:true};
-  const pos=c.popMode==="separate"?"right":c.popPos;
-  return pos==="right"
-    ?{w:c.width+GAP+POPW,h:Math.max(TAGH,POPH),pl:c.width+GAP,pb:0,tag:true,pop:true}
-    :{w:Math.max(c.width,POPW),h:TAGH+GAP+POPH,pl:0,pb:TAGH+GAP,tag:true,pop:true};
+  if(part==="pop")return {w:POPW,h:POPH,pl:0,pb:0,tag:false,pop:c.popOn};
+  if(part==="preview"&&c.popOn)return {w:c.width+GAP+POPW,h:Math.max(TAGH,POPH),pl:c.width+GAP,pb:0,tag:true,pop:true};
+  return {w:c.width,h:TAGH,pl:0,pb:0,tag:true,pop:false};
 }
 function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
 function barcode(seed,w,h){
@@ -612,13 +573,11 @@ function mount(host,raw,opts){
      `<div class="tg-meta"><span class="rec">${c.timecode?"REC 00:00:00":"ON AIR"}</span><span>${esc(BRAND.shop)}</span><span>${no}</span><span>TYT/CN</span></div>`+
    `</div></div></div>`+
    `<div class="pp-unit hidden" style="left:${L.pl}px;bottom:${L.pb}px"><div class="pp-anim"><div class="pp">`+
+     `<i class="mk tl"></i><i class="mk tr"></i><i class="mk bl"></i><i class="mk br"></i>`+
      `<div class="band ticking"><div class="band-in"></div></div>`+
-     `<div class="pp-body">`+
-       `<div class="pp-photo"><div class="pp-frame"><img alt="" referrerpolicy="no-referrer"><i></i><i></i><i></i><i></i><div class="fl"></div></div><div class="pp-fig"><span class="fig"></span><span>TYTGEAR</span></div></div>`+
-       `<div class="pp-info"><div class="pp-top"><span class="no"></span><span class="pp-chip"></span></div><div class="pp-cat"></div><div class="pp-name"></div>`+
-         `<div class="pp-spec"><div class="pp-row"><em>Size</em><b class="sz"></b></div><div class="pp-row pp-price"><em class="from"></em><b class="pr"></b></div></div></div>`+
-     `</div>`+
-     `<div class="pp-code"></div>`+
+     `<div class="pp-main"><div class="pp-thumb"><img alt="" referrerpolicy="no-referrer"></div>`+
+       `<div class="pp-txt"><div class="pp-top"></div><div class="pp-name"></div><div class="pp-sub"></div></div><div class="pp-code"></div></div>`+
+     `<div class="pp-meta"><span class="rec">New drop</span><span class="no"></span><span class="ser"></span><span class="cd"></span><div class="pp-prog"></div></div>`+
    `</div></div></div>`;
   host.appendChild(root);
 
@@ -655,51 +614,51 @@ function mount(host,raw,opts){
 
   /* ---- product drop ---- */
   const pu=root.querySelector(".pp-unit"),pa=root.querySelector(".pp-anim"),q=s=>pu.querySelector(s);
-  let popBusy=false,photoT=null,cdT=null;
+  let popBusy=false,cdT=null;
   function showPopup(){
     if(!L.pop||popBusy||!CATALOG.length)return;popBusy=true;
-    const p=nextProduct(),dur=BRAND.popupSeconds*1000,imgs=p.imgs.map(imgUrl);
-    // wait (max 2.5s) for the photos so the drop never shows an empty frame
-    Promise.race([Promise.all(imgs.map(preload)),new Promise(r=>setTimeout(r,2500))]).then(()=>{
+    const p=nextProduct(),dur=BRAND.popupSeconds*1000,src=imgUrl(p.imgs[0]);
+    // wait (max 2.5s) for the photo so the drop never shows an empty frame
+    Promise.race([preload(src),new Promise(r=>setTimeout(r,2500))]).then(()=>{
       if(host._tg!==ctl){popBusy=false;return;}
-      renderPopup(p,imgs,dur);
+      renderPopup(p,src,dur);
     });
   }
-  function renderPopup(p,imgs,dur){
+  function renderPopup(p,src,dur){
     const b=bandHTML(("New drop  ✦  "+p.cat+"  ✦  "+BRAND.shop+"  ✦  "+(c.code?"Code "+c.code+"  ✦  ":"")).toUpperCase(),POPW*1.2);
-    const band=q(".band"),bi=q(".band-in");bi.innerHTML=b.html;band.style.setProperty("--td",b.secs+"s");
-    const idx=CATALOG.indexOf(p)+1;
-    q(".no").textContent=`NO.${pad(idx,3)} / ${pad(CATALOG.length,3)}`;
-    q(".pp-chip").textContent=series(p);
-    q(".pp-cat").textContent=p.cat;
-    const nm=q(".pp-name");nm.classList.toggle("long",p.name.length>30);nm.textContent=p.name;
-    q(".sz").textContent=p.sizes.length?p.sizes.map(shortSize).join(" · "):"One size";
-    q(".from").textContent=p.hi>p.lo?"From":"Price";
-    q(".pr").textContent=money(p.lo);
-    q(".pp-code").innerHTML=(c.code
-      ?`<span class="lab">USE<br>CODE</span><span class="code">${esc(c.code)}</span><span class="off">${esc(BRAND.offer)}<br>${esc(BRAND.shop.toUpperCase())}</span>`
-      :`<span class="lab">SHOP<br>AT</span><span class="code">${esc(BRAND.shop.toUpperCase())}</span>`)+
-      `<span class="cd">00:${pad(BRAND.popupSeconds)}</span><div class="pp-prog"></div>`;
-    const img=q(".pp-frame img"),fl=q(".pp-frame .fl"),fig=q(".fig");
-    let vi=0;
-    const setPhoto=flash=>{img.src=imgs[vi];fig.textContent=`FIG.${pad(vi+1)} / ${pad(imgs.length)}`;if(flash)fl.animate([{opacity:.9},{opacity:0}],{duration:180,easing:"ease-out"});};
-    setPhoto(false);
-    clearInterval(photoT);clearInterval(cdT);
-    if(imgs.length>1)photoT=every(()=>{vi=(vi+1)%imgs.length;setPhoto(true);},Math.max(2400,(dur-1500)/imgs.length));
-    let left=BRAND.popupSeconds;const cd=q(".cd");
-    cdT=every(()=>{left=Math.max(0,left-1);cd.textContent="00:"+pad(left);},1000);
+    q(".band-in").innerHTML=b.html;q(".band").style.setProperty("--td",b.secs+"s");
+    q(".pp-thumb img").src=src;
+    q(".pp-top").textContent=p.cat;
+    // category line already says mousepad/poster, so drop it from the name to save room
+    const title=p.name.replace(/\s+(Small\s+)?(Mousepad|Poster)/i,m=>/small/i.test(m)?" Small":"").replace(/\s+[–-]\s+/," ").trim();
+    const nm=q(".pp-name");fitName(nm,title);
+    q(".pp-sub").innerHTML=(p.hi>p.lo?"From ":"")+`<b>${esc(money(p.lo))}</b>`+(p.sizes.length?"  ·  "+esc(p.sizes.map(shortSize).join(" / ")):"");
+    q(".pp-code").innerHTML=c.code
+      ?`<small>USE CODE</small><b>${esc(c.code)}</b><small>${esc(BRAND.offer)}</small>`
+      :`<small>SHOP AT</small><b>${esc(BRAND.shop.toUpperCase())}</b>`;
+    q(".no").textContent=`NO.${pad(CATALOG.indexOf(p)+1,3)}/${pad(CATALOG.length,3)}`;
+    q(".ser").textContent=series(p);
+    let left=BRAND.popupSeconds;const cd=q(".cd");cd.textContent="00:"+pad(left);
+    clearInterval(cdT);cdT=every(()=>{left=Math.max(0,left-1);cd.textContent="00:"+pad(left);},1000);
     pu.classList.remove("hidden");
     pa.getAnimations().forEach(a=>a.cancel());
-    pa.animate([{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0 0)"}],{duration:520,easing:"cubic-bezier(.7,0,.2,1)"});
-    q(".pp-frame").animate([{clipPath:"inset(100% 0 0 0)"},{clipPath:"inset(0 0 0 0)"}],{duration:480,delay:260,easing:"cubic-bezier(.7,0,.2,1)",fill:"backwards"});
-    q(".pp-code").animate([{transform:"translateX(-100%)"},{transform:"none"}],{duration:420,delay:360,easing:"cubic-bezier(.2,.9,.2,1)",fill:"backwards"});
-    scramble(nm,p.name,800);
+    pa.animate(ENTER.shutter.k,ENTER.shutter.o);
+    pu.querySelectorAll(".pp .band, .pp-meta").forEach((el,i)=>el.animate([{transform:"translateX(-24px)",opacity:0},{transform:"none",opacity:1}],{duration:360,delay:180+i*90,easing:"cubic-bezier(.2,.9,.2,1)",fill:"backwards"}));
+    q(".pp-thumb").animate([{clipPath:"inset(100% 0 0 0)"},{clipPath:"inset(0 0 0 0)"}],{duration:420,delay:220,easing:"cubic-bezier(.7,0,.2,1)",fill:"backwards"});
+    q(".pp-code").animate([{clipPath:"inset(0 0 0 100%)"},{clipPath:"inset(0 0 0 0)"}],{duration:420,delay:320,easing:"cubic-bezier(.7,0,.2,1)",fill:"backwards"});
+    if(c.scramble)scramble(nm,title,700);
     q(".pp-prog").animate([{transform:"scaleX(1)"},{transform:"scaleX(0)"}],{duration:dur,easing:"linear",fill:"forwards"});
     later(hidePopup,dur);
   }
+  // shrink the name until it fits on one line (27px down to 16px); the longest names wrap to two lines at 16px
+  function fitName(el,text){
+    el.textContent=text;el.classList.remove("two");
+    for(const px of [27,24,21,18,16]){el.style.fontSize=px+"px";if(el.scrollWidth<=el.clientWidth+1)return;}
+    el.classList.add("two");
+  }
   function hidePopup(){
-    clearInterval(photoT);clearInterval(cdT);
-    pa.animate([{clipPath:"inset(0 0 0 0)"},{clipPath:"inset(100% 0 0 0)"}],{duration:380,easing:"cubic-bezier(.7,0,.2,1)",fill:"forwards"}).finished
+    clearInterval(cdT);
+    pa.animate(ENTER.shutter.k,Object.assign({},ENTER.shutter.o,{duration:380,direction:"reverse",fill:"forwards"})).finished
       .then(()=>{pu.classList.add("hidden");popBusy=false;}).catch(()=>{popBusy=false;});
   }
 
@@ -707,7 +666,7 @@ function mount(host,raw,opts){
     timers.forEach(clearTimeout);timers.length=0;
     if(L.tag){if(c.mode==="interval")tagCycle();else showTag();}
     if(opts.overlay&&L.pop){ // scheduled product drops on the live overlay
-      later(function loop(){showPopup();later(loop,c.popEvery*60000);},BRAND.firstPopupAfter*1000);
+      later(function loop(){showPopup();later(loop,BRAND.popEvery*60000);},BRAND.firstPopupAfter*1000);
     }
   }
   const ctl={play,showPopup,config:c,layout:L,destroy(){timers.forEach(clearTimeout);intervals.forEach(clearInterval);host.innerHTML="";host._tg=null;}};
@@ -739,7 +698,7 @@ function drawCatalog(){
   $("cats").innerHTML=`<li class="tot"><span>In rotation · ${rows.length} categories</span><b>${pad(CATALOG.length,3)}</b></li>`+
     rows.map(([k,n])=>`<li><span>${esc(k)}</span><b>${pad(n,3)}</b></li>`).join("");
   $("syncLine").textContent=`${CATALOG.length} products · ${catalogLive?"live from":"snapshot of"} ${BRAND.shop}`;
-  const w=bandHTML(`${CATALOG.length} products from ${BRAND.shop}  ✦  ${rows.length} categories  ✦  drops always on  ✦  ${BRAND.offer} with creator code  ✦  black & white system  ✦  `.toUpperCase(),3000);
+  const w=bandHTML(`${CATALOG.length} products from ${BRAND.shop}  ✦  ${rows.length} categories  ✦  a drop every ${BRAND.popEvery} min  ✦  ${BRAND.offer} with creator code  ✦  black & white system  ✦  `.toUpperCase(),3000);
   $("wire").innerHTML=w.html;
 }
 drawCatalog();catalogReady.then(drawCatalog);
@@ -755,14 +714,12 @@ function syncLabels(){
   $("v-scale").textContent=(+cfg.scale).toFixed(2)+"×";
   $("intervalRow").style.display=cfg.mode==="interval"?"grid":"none";
   $("codeWarn").style.display=cfg.code?"none":"block";
-  const sep=cfg.popOn&&cfg.popMode==="separate";
+  const sep=cfg.popOn;
   $("customRow").hidden=cfg.finish!=="custom";
   const sw=$("customSw");sw.style.background=cfg.c1;sw.style.color=cfg.c2;sw.firstElementChild.style.background=cfg.c3;
   $("onOffRow").hidden=!BRAND.allowDisable;
   $("lockBox").firstElementChild.textContent=BRAND.allowDisable?(cfg.popOn?"Drops enabled":"Drops disabled"):"Always on";
   $("popSettings").hidden=!cfg.popOn;
-  $("posRow").hidden=cfg.popMode!=="together";
-  $("dropsBox").hidden=!sep;
   $("obsDropsLi").hidden=!sep;
   $("copyLabel").textContent=sep?"Copy tag link":"Copy OBS link";
   $("testPop").disabled=!cfg.popOn;
@@ -778,7 +735,7 @@ function refresh(remount){
   const Lo=layout(cfg,"overlay"),Lp=layout(cfg,"pop"),L=layout(cfg,"preview");
   $("obsSize").textContent=sizeOf(Lo);
   $("dropsSize").textContent=$("obsDropsSize").textContent=sizeOf(Lp);
-  $("sizeCap").textContent=cfg.popOn&&cfg.popMode==="separate"?`Tag source ${sizeOf(Lo)} · drops source ${sizeOf(Lp)}`:`Browser source ${sizeOf(Lo)}`;
+  $("sizeCap").textContent=cfg.popOn?`Tag source ${sizeOf(Lo)} · drops source ${sizeOf(Lp)}`:`Browser source ${sizeOf(Lo)}`;
   stageHost.style.left="20px";
   stageHost.style.top=(860-30-(L.h-TAGH)*cfg.scale)+"px";
   if(remount)mount(stageHost,cfg,{part:"preview"});
@@ -790,7 +747,7 @@ inputs.forEach(el=>el.addEventListener(el.tagName==="SELECT"?"change":"input",()
 }));
 document.querySelectorAll('[data-type="radio"] .opt').forEach(o=>o.addEventListener("click",()=>{
   const k=o.parentElement.dataset.k;cfg[k]=o.dataset.v;cfg=clean(cfg);fillForm();refresh(true);
-  if(["popEvery","popPos","popMode"].includes(k)||(k==="popOn"&&cfg.popOn))setTimeout(()=>stageHost._tg&&stageHost._tg.showPopup(),600);
+  if(k==="popOn"&&cfg.popOn)setTimeout(()=>stageHost._tg&&stageHost._tg.showPopup(),600);
 }));
 document.querySelectorAll('[data-type="toggle"]').forEach(o=>o.addEventListener("click",()=>{cfg[o.dataset.k]=!cfg[o.dataset.k];cfg=clean(cfg);fillForm();refresh(true);}));
 
@@ -804,7 +761,7 @@ function copyLink(link,what){
   const fallback=()=>{const t=document.createElement("textarea");t.value=link;document.body.appendChild(t);t.select();try{document.execCommand("copy");}catch(e){}t.remove();done();};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(done,fallback);else fallback();
 }
-$("copyTop").onclick=()=>copyLink(url,cfg.popOn&&cfg.popMode==="separate"?"Tag link":"Link");
+$("copyTop").onclick=()=>copyLink(url,cfg.popOn?"Tag link":"Link");
 $("copyDrops").onclick=()=>copyLink(dropsUrl,"Drops link");
 
 const box=$("stageBox"),stage=$("stage");
