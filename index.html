@@ -16,6 +16,8 @@
   --f-body:Archivo,'Helvetica Neue',Arial,sans-serif;
   --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
   color-scheme:light;
+  /* official TYTGEAR wordmark (from tytgear.in), trimmed to a transparent mask */
+  --logo:url("data:image/png;base64,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");
 }
 [hidden]{display:none!important}
 
@@ -35,8 +37,8 @@
 .band.static{justify-content:space-between;padding:0 8px}
 .tg-main{position:relative;height:76px;display:flex;align-items:stretch;overflow:hidden}
 .ht .tg-main::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--w) 1.1px,transparent 1.5px);background-size:6px 6px;opacity:.22;-webkit-mask-image:linear-gradient(90deg,transparent 45%,#000 100%);mask-image:linear-gradient(90deg,transparent 45%,#000 100%);pointer-events:none}
-.tg-badge{flex:0 0 76px;background:var(--bb);color:var(--bf);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px}
-.tg-badge b{font:var(--dw) 30px/.8 var(--disp);letter-spacing:.01em}
+.tg-badge{flex:0 0 104px;background:var(--bb);color:var(--bf);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px}
+.tg-logo{display:block;width:84px;height:19px;background:currentColor;-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
 .tg-badge small{font:700 7.5px/1 var(--mono);letter-spacing:.22em}
 .tg-txt{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0 12px 0 14px}
 .tg-name{font:var(--dw) 46px/.88 var(--disp);text-transform:uppercase;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:clip}
@@ -107,12 +109,10 @@ body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 var(--f-bod
 .mast h1{margin:0;font:900 clamp(56px,9vw,112px)/.78 var(--f-disp);letter-spacing:-.01em;text-transform:uppercase}
 .mast-meta{display:grid;gap:3px;font:500 11px/1.4 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#bdbdbd;padding-bottom:4px}
 .mast-meta b{color:var(--paper);font-weight:700}
-.mast .sp{flex:1}
-.copy{appearance:none;border:0;background:var(--paper);color:var(--ink);font:900 26px/1 var(--f-disp);letter-spacing:.02em;text-transform:uppercase;padding:16px 22px 14px;cursor:pointer;display:flex;align-items:center;gap:14px}
-.copy small{font:500 10px/1.3 var(--f-mono);letter-spacing:.14em;text-align:left;color:var(--grey)}
-.copy:hover{background:#fff}
+.copy{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:0;font:900 20px/1 var(--f-disp);letter-spacing:.03em;text-transform:uppercase;padding:9px 16px 8px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.copy::after{content:"→";font-family:var(--f-mono);font-size:16px}
+.copy:hover{background:#2a2a2a}
 .copy:focus-visible,.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.mast .copy:focus-visible{outline-color:var(--paper)}
 .wire{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--paper);overflow:hidden;white-space:nowrap;font:500 11px/30px var(--f-mono);letter-spacing:.2em;text-transform:uppercase}
 .wire .band-in{animation:tick 60s linear infinite}
 .studio{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:start}
@@ -213,8 +213,6 @@ input[type=range]{width:100%;accent-color:var(--ink)}
         <span>Name tag + product drops for OBS</span>
         <span id="syncLine">Catalog: tytgear.in</span>
       </div>
-      <span class="sp"></span>
-      <button class="copy" id="copyTop" type="button"><span id="copyLabel">Copy OBS link</span> <small>Paste into<br>OBS → Browser</small></button>
     </div>
   </header>
   <div class="wire" aria-hidden="true"><div class="band-in" id="wire"></div></div>
@@ -224,9 +222,9 @@ input[type=range]{width:100%;accent-color:var(--ink)}
       <section class="step">
         <div class="step-h"><span class="step-n">01</span><h2>Your details</h2><p class="help">Shown on your tag. Your code prints on every product drop.</p></div>
         <label class="lbl" for="f-name">Name on stream</label>
-        <input type="text" class="big" id="f-name" data-k="name" maxlength="24" placeholder="NOVAPLAYS">
+        <input type="text" class="big" id="f-name" data-k="name" maxlength="24" placeholder="TYTGEAR">
         <label class="lbl" for="f-code">TYTGEAR creator code</label>
-        <input type="text" class="code" id="f-code" data-k="code" maxlength="16" placeholder="NOVA10">
+        <input type="text" class="code" id="f-code" data-k="code" maxlength="16" placeholder="TYT10">
         <div class="warn" id="codeWarn">No code yet. Viewers can't use your discount.</div>
         <label class="lbl" for="f-lines">Lines under your name · one per line</label>
         <textarea id="f-lines" data-k="lines" placeholder="@yourhandle&#10;Live weekdays 8PM IST"></textarea>
@@ -248,9 +246,9 @@ input[type=range]{width:100%;accent-color:var(--ink)}
         </div>
         <span class="lbl" style="margin-top:18px">Typeface</span>
         <div class="cards" data-k="font" data-type="radio">
-          <button class="opt card-opt font-opt" type="button" data-v="shoulders"><b style="font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:900">Nova</b><span>Shoulders</span></button>
-          <button class="opt card-opt font-opt" type="button" data-v="anton"><b style="font-family:Anton,Impact,sans-serif;font-weight:400">Nova</b><span>Anton</span></button>
-          <button class="opt card-opt font-opt" type="button" data-v="archivo"><b style="font-family:'Archivo Black','Arial Black',sans-serif;font-weight:400;font-size:24px;padding-top:15px">Nova</b><span>Archivo</span></button>
+          <button class="opt card-opt font-opt" type="button" data-v="shoulders"><b style="font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:900">Tyt</b><span>Shoulders</span></button>
+          <button class="opt card-opt font-opt" type="button" data-v="anton"><b style="font-family:Anton,Impact,sans-serif;font-weight:400">Tyt</b><span>Anton</span></button>
+          <button class="opt card-opt font-opt" type="button" data-v="archivo"><b style="font-family:'Archivo Black','Arial Black',sans-serif;font-weight:400;font-size:24px;padding-top:15px">Tyt</b><span>Archivo</span></button>
         </div>
       </section>
 
@@ -314,7 +312,6 @@ input[type=range]{width:100%;accent-color:var(--ink)}
       <details class="more">
         <summary>More settings</summary>
         <div class="row2" style="margin-top:16px">
-          <div><label class="lbl" for="f-badge">Badge text</label><input type="text" id="f-badge" data-k="badge" maxlength="4"></div>
           <div><label class="lbl" for="f-rotate">Line change (sec)</label><input type="text" id="f-rotate" data-k="rotate" inputmode="numeric"></div>
         </div>
         <label class="lbl" for="f-width">Tag width · <span id="v-width"></span></label>
@@ -336,6 +333,7 @@ input[type=range]{width:100%;accent-color:var(--ink)}
         <h3>Preview</h3>
         <button class="btn" id="replay" type="button">Replay tag</button>
         <button class="btn ghost" id="testPop" type="button">Show a product drop</button>
+        <button class="copy" id="copyTop" type="button"><span id="copyLabel">Copy OBS link</span></button>
       </div>
       <div class="stageBox" id="stageBox">
         <div class="stage" id="stage">
@@ -350,7 +348,7 @@ input[type=range]{width:100%;accent-color:var(--ink)}
       <div class="obs">
         <h4>Add to OBS</h4>
         <ol>
-          <li><span>Press <b>Copy OBS link</b> at the top.</span></li>
+          <li><span>Press <b>Copy OBS link</b> in the Preview row above.</span></li>
           <li><span>In OBS open <b>Sources → + → Browser</b>, paste the link, set size to <b id="obsSize"></b>.</span></li>
           <li><span>Drag it under your webcam. After any change here, copy the link again.</span></li>
           <li id="obsDropsLi" hidden><span>For drops, add a second Browser source with <b>Copy drops link</b> (step 04), size <b id="obsDropsSize"></b>, anywhere on screen.</span></li>
@@ -472,7 +470,7 @@ const FONTS={
   anton:{f:"Anton,Impact,'Arial Narrow',sans-serif",w:"400"},
   archivo:{f:"'Archivo Black','Arial Black',sans-serif",w:"400"}
 };
-const DEFAULTS={name:"NovaPlays",code:"",lines:["@yourhandle","Live weekdays 8PM IST"],badge:"TYT",finish:"ink",font:"shoulders",
+const DEFAULTS={name:"TYTGEAR",code:"TYT10",lines:["@yourhandle","Live weekdays 8PM IST"],finish:"ink",font:"shoulders",
   enter:"shutter",ticker:true,scramble:true,timecode:true,halftone:true,marks:true,rotate:5,mode:"always",showFor:15,every:60,
   width:520,scale:1,popEvery:10,popPos:"right",popOn:true,popMode:"together",c1:"#121417",c2:"#f4f4f4",c3:"#ff4d2e"};
 
@@ -485,9 +483,8 @@ function clean(c){
   c=Object.assign({},DEFAULTS,c||{});
   if(!Array.isArray(c.lines))c.lines=String(c.lines||"").split("\n");
   c.lines=c.lines.map(s=>String(s).trim()).filter(Boolean).slice(0,8);
-  c.name=String(c.name||"").trim().slice(0,24)||"NovaPlays";
+  c.name=String(c.name||"").trim().slice(0,24)||"TYTGEAR";
   c.code=String(c.code||"").toUpperCase().replace(/[^A-Z0-9_-]/g,"").slice(0,16);
-  c.badge=String(c.badge||"").slice(0,4);
   c.finish=pick(c.finish,["ink","paper","mono","custom"],"ink");
   ["c1","c2","c3"].forEach(k=>{if(!/^#[0-9a-f]{6}$/i.test(c[k]))c[k]=DEFAULTS[k];});
   c.font=pick(c.font,Object.keys(FONTS),"shoulders");
@@ -607,7 +604,7 @@ function mount(host,raw,opts){
        ?`<div class="band ticking" style="--td:${tb.secs}s"><div class="band-in">${tb.html}</div></div>`
        :`<div class="band static"><span>TYTGEAR × CREATOR</span><span>${esc(BRAND.shop.toUpperCase())}</span></div>`)+
      `<div class="tg-main">`+
-       (c.badge?`<div class="tg-badge"><b>${esc(c.badge)}</b><small>CREATOR</small></div>`:"")+
+       `<div class="tg-badge"><i class="tg-logo" role="img" aria-label="TYTGEAR"></i><small>CREATOR</small></div>`+
        `<div class="tg-txt"><div class="tg-name">${esc(c.name)}</div><div class="tg-sub">${esc(lines[0])}</div></div>`+
        `<div class="tg-side"><span>CH.01 / IN</span>${barcode(c.name,72,22)}</div>`+
        `<div class="wbar"></div>`+
@@ -730,7 +727,7 @@ if(m){
 }
 
 /* =================== EDITOR MODE =================== */
-const KEY="tytgear-overlay-v3";
+const KEY="tytgear-overlay-v4";
 let cfg;
 try{cfg=clean(JSON.parse(localStorage.getItem(KEY)));}catch(e){cfg=clean(DEFAULTS);}
 const $=id=>document.getElementById(id);
