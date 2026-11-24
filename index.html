@@ -347,8 +347,17 @@ const BRAND={
   allowDisable:true,        // false = creators can't turn drops off (the on/off switch is hidden and drops are forced on)
   imgBase:"https://tytgear.in/wp-content/uploads/",
   liveCatalog:"https://tytgear.in/wp-json/wc/store/v1/products?per_page=100",
-  // snapshot taken 2026-11-18 (in-stock only): [name, category, minPrice, maxPrice, photos, sizes, slug]
+  // snapshot taken 2026-11-25 (in-stock only): [name, category, minPrice, maxPrice, photos, sizes, slug]
   products:[
+    ["Haikyuu Karasuno Golden Hour Walk Home Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/25__image-300x400.png", "2026/11/25__image2-300x400.png", "2026/11/25__image3-300x400.png", "2026/11/25__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "haikyuu-karasuno-golden-hour-walk-home-tapestry"],
+    ["Haikyuu Karasuno Crows Ink Sun Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/24__image-300x400.png", "2026/11/24__image2-300x400.png", "2026/11/24__image3-300x400.png", "2026/11/24__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "haikyuu-karasuno-crows-ink-sun-tapestry"],
+    ["Haikyuu Hinata and Kageyama Quick Attack Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/23__image-300x400.png", "2026/11/23__image2-300x400.png", "2026/11/23__image3-300x400.png", "2026/11/23__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "haikyuu-hinata-and-kageyama-quick-attack-tapestry"],
+    ["One Piece Nico Robin Ohara Library Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/6__image-300x400.png", "2026/11/6__image2-300x400.png", "2026/11/6__image3-300x400.png", "2026/11/6__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "one-piece-nico-robin-ohara-library-tapestry"],
+    ["One Piece Straw Hat Crew Sunset Voyage Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/5__image-300x400.png", "2026/11/5__image2-300x400.png", "2026/11/5__image3-300x400.png", "2026/11/5__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "one-piece-straw-hat-crew-sunset-voyage-tapestry"],
+    ["One Piece Roronoa Zoro Demon Blade Kimono Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/4__image-300x400.png", "2026/11/4__image2-300x400.png", "2026/11/4__image3-300x400.png", "2026/11/4__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "one-piece-roronoa-zoro-demon-blade-kimono-tapestry"],
+    ["One Piece Roronoa Zoro Wanted Scroll Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/3__image-300x400.png", "2026/11/3__image2-300x400.png", "2026/11/3__image3-300x400.png", "2026/11/3__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "one-piece-roronoa-zoro-wanted-scroll-tapestry"],
+    ["One Piece Monkey D Luffy Gear 5 Sun God Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/2__image-300x400.png", "2026/11/2__image2-300x400.png", "2026/11/2__image3-300x400.png", "2026/11/2__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "one-piece-monkey-d-luffy-gear-5-sun-god-tapestry"],
+    ["One Piece Monkey D Luffy Full Moon Voyage Tapestry", "Anime Tapestries", 699, 1299, ["2026/11/1__image-300x400.png", "2026/11/1__image2-300x400.png", "2026/11/1__image3-300x400.png", "2026/11/1__image4-300x400.png"], ["26x36 inch", "30x40 inch", "35x45 inch", "40x50 inch", "48x54 inch"], "one-piece-monkey-d-luffy-full-moon-voyage-tapestry"],
     ["Lightning Sprinter Neon Skyline Mousepad", "Original Art & Abstract Mousepads", 799, 999, ["2026/11/60-1-300x400.jpg", "2026/11/60-300x400.jpg", "2026/11/60-2-300x400.jpg", "2026/11/60-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "lightning-sprinter-neon-skyline-mousepad"],
     ["Abyss Dragon Midnight Lake Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/58-1-300x400.jpg", "2026/11/58-300x400.jpg", "2026/11/58-2-300x400.jpg", "2026/11/58-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "abyss-dragon-midnight-lake-mousepad"],
     ["Spirit Dragon Frozen Ruins Mousepad", "Fantasy & Dragons Mousepads", 799, 999, ["2026/11/57-1-300x400.jpg", "2026/11/57-300x400.jpg", "2026/11/57-2-300x400.jpg", "2026/11/57-3-300x400.jpg"], ["60x30 cm", "80x33 cm"], "spirit-dragon-frozen-ruins-mousepad"],
@@ -421,8 +430,8 @@ function fromStore(j){
     const lo=pr.price_range?+pr.price_range.min_amount/d:+pr.price/d,hi=pr.price_range?+pr.price_range.max_amount/d:lo;
     const cats=p.categories.map(c=>decodeHtml(c.name));
     const g=n=>(p.attributes.find(a=>a.name===n)||{terms:[]}).terms.map(t=>decodeHtml(t.name));
-    return {name:decodeHtml(p.name),cat:cats.find(c=>!/^(Mousepads|Posters)$/.test(c))||cats[0]||"",lo,hi,
-      imgs:p.images.slice(0,4).map(i=>i.thumbnail||i.src),sizes:[...g("Mousepad Size"),...g("Poster Size")],slug:p.slug};
+    return {name:decodeHtml(p.name),cat:cats.find(c=>!/^(Mousepads|Posters|Tapestries)$/.test(c))||cats[0]||"",lo,hi,
+      imgs:p.images.slice(0,4).map(i=>i.thumbnail||i.src),sizes:[...g("Mousepad Size"),...g("Poster Size"),...g("Tapestry Size")],slug:p.slug};
   });
 }
 let catalogLive=false,rr=null;
@@ -521,8 +530,17 @@ const imgUrl=u=>/^https?:/.test(u)?u:BRAND.imgBase+u;
 // tytgear.in blocks images requested from other sites, but allows requests with no referrer
 const preload=u=>new Promise(r=>{const i=new Image();i.referrerPolicy="no-referrer";i.onload=i.onerror=r;i.src=u;});
 const shortSize=s=>s.replace(/^.*\((.*)\)\s*$/,"$1");
+function sizeText(list){
+  const sz=list.map(shortSize);
+  if(sz.length<=4)return sz.join(" / ");
+  const unit=(sz[0].match(/\s([a-z]+)$/i)||["",""])[1];
+  const bare=v=>unit?v.replace(new RegExp("\\s"+unit+"$"),""):v;
+  const short=unit.toLowerCase()==="inch"?"in":unit;
+  return `${bare(sz[0])}–${bare(sz[sz.length-1])}${short?" "+short:""}`;
+}
 const money=n=>BRAND.currency+Math.round(n).toLocaleString("en-IN");
 function series(p){
+  if(/tapestr/i.test(p.cat))return "TAPESTRY";
   if(/poster/i.test(p.cat))return "WALL POSTER";
   if(p.sizes.some(s=>/small/i.test(s))||/small/i.test(p.name))return "SMALL SERIES";
   return "HYBRID SERIES";
@@ -630,9 +648,9 @@ function mount(host,raw,opts){
     q(".pp-thumb img").src=src;
     q(".pp-top").textContent=p.cat;
     // category line already says mousepad/poster, so drop it from the name to save room
-    const title=p.name.replace(/\s+(Small\s+)?(Mousepad|Poster)/i,m=>/small/i.test(m)?" Small":"").replace(/\s+[–-]\s+/," ").trim();
+    const title=p.name.replace(/\s+(Small\s+)?(Mousepad|Poster|Tapestry)\b/i,m=>/small/i.test(m)?" Small":"").replace(/\s+[–-]\s+/," ").trim();
     const nm=q(".pp-name");fitName(nm,title);
-    q(".pp-sub").innerHTML=(p.hi>p.lo?"From ":"")+`<b>${esc(money(p.lo))}</b>`+(p.sizes.length?"  ·  "+esc(p.sizes.map(shortSize).join(" / ")):"");
+    q(".pp-sub").innerHTML=(p.hi>p.lo?"From ":"")+`<b>${esc(money(p.lo))}</b>`+(p.sizes.length?"  ·  "+esc(sizeText(p.sizes)):"");
     q(".pp-code").innerHTML=c.code
       ?`<small>USE CODE</small><b>${esc(c.code)}</b><small>${esc(BRAND.offer)}</small>`
       :`<small>SHOP AT</small><b>${esc(BRAND.shop.toUpperCase())}</b>`;
